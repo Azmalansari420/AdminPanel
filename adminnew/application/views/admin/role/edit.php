@@ -75,7 +75,7 @@
 
                         <div class="col-12 form-group m-b-0">
                            <label>Select Status</label>
-                           <select class=" form-control" required name="status">
+                           <select class="selectpicker form-control" required name="status" data-style="btn-default" data-live-search="true">
                               <option value="1"  <?php if($EDITDATA[0]->status==1)echo 'selected'; ?>>Show</option>
                               <option value="0" <?php if($EDITDATA[0]->status==0)echo 'selected'; ?>>Hide</option>
                            </select>
