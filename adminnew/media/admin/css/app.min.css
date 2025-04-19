@@ -33532,12 +33532,17 @@ pre {
     border-radius: 6px;
 }
 
-div#pagination-links
-{
-	text-align: center;
+div#pagination-links {
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .active-page {
   background-color: #ff0000; /* Change the background color to red */
   color: #ffffff; /* Change the text color to white */
+}
+
+a.pagination-link {
+    margin-right: 3px;
+    border-radius: 5px;
 }

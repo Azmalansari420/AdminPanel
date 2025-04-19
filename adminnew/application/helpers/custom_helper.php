@@ -178,20 +178,7 @@ function user_status($value)
 }
 
 
-/*sizename*/
-function sizename($id)
-{
-  $ci = & get_instance();
-  $size = $ci->crud->selectDataByMultipleWhere('size',array('id'=>$id,));
-  return $size[0]->name;
-}
-/*color name*/
-function colorname($id)
-{
-  $ci = & get_instance();
-  $color = $ci->crud->selectDataByMultipleWhere('color',array('id'=>$id,));
-  return $color[0]->name;
-}
+
 /*discount percentage */
 function discount($original_price,$cut_price){
   $diff = ($original_price-$cut_price);
@@ -199,47 +186,7 @@ function discount($original_price,$cut_price){
   $pers = ($divid/$original_price);
   return substr($pers,0,2);
  }
-/*coupon type*/
-function coupontype($value)
-{
-  if($value==2)
-  {
-    $string = '<button class="btn btn-sm btn-dark">Amount</button>';
-  }
-  else if($value==1)
-  {
-    $string = '<button class="btn btn-sm btn-dark">Percentage</button>';
-  }
-  return $string;
-} 
-/*payment type*/
-function paymenttype($value)
-{
-  $string = '';
-  if($value==1)
-  {
-    $string = '<span class="btn btn-primary btn-sm"> COD</span>';
-  }
-  else if($value==2)
-  {
-    $string = '<span class="btn btn-dark btn-sm"> Online</span>';
-  }
-  return $string;
-}
-/*coupon type*/
-function coupon_type_cart($value)
-{
-  $string = '';
-  if($value==1)
-  {
-    $string = '<p class="mb-0 text-success font-weight-bold d-flex justify-content-start align-items-center">Cart Amount</p>';
-  }
-  else if($value==2)
-  {
-    $string = '<p class="mb-0 text-danger font-weight-bold d-flex justify-content-start align-items-center">Product Wise</p>';
-  }
-  return $string;
-}
+
 /*apply coupon code*/
 function applied_coupon($coupon,$order_id='')
 {
@@ -341,36 +288,11 @@ function applied_coupon($coupon,$order_id='')
 }
 
 /*order status*/
-function order_status($value)
-{
-  if($value==0)
-  {
-    $string = '<button class="btn btn-sm btn-primary">Confirm Order</button>';
-  }
-  else if($value==2)
-  {
-    $string = '<button class="btn btn-sm btn-primary">Warehouse</button>';
-  }
-  else if($value==3)
-  {
-    $string = '<button class="btn btn-sm btn-primary">Shipped Order</button>';
-  }
-  else if($value==4)
-  {
-    $string = '<button class="btn btn-sm btn-primary">Deliverd</button>';
-  }
-  else if($value==5)
-  {
-    $string = '<button class="btn btn-sm btn-primary">Cancel</button>';
-  }
-
-  return $string;
-} 
 
 /*price formet*/
 function currency_simble($value)
 {
-  return 'Rs '.number_format($value,2);
+  return '₹ '.number_format($value,2);
 }
 
 
@@ -382,13 +304,7 @@ function count_cart()
   return $count;
 }
 
-function wishlist_cart()
-{
-  $ci = & get_instance();
-  $add_cart = $ci->db->get_where('add_to_temp_wishlist',array('user_id'=>temp_session_id(),))->result_object();
-  $count = count($add_cart);
-  return $count;
-}
+
 
 function categoryname($id)
 {
@@ -404,6 +320,43 @@ function categoryname($id)
   }
   return $name;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

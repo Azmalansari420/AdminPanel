@@ -21,7 +21,7 @@ class Slider extends CI_Controller
 						   	'pagination_url'=>'admin_con/slider/get_table_data',
 						   	'controller_name'=>'slider',
 						   	'page_name'=>'slider.php',
-						   	'pagination_limit'=>'10',
+						   	'pagination_limit'=>'15',
 						   ); 
 
 
@@ -115,57 +115,104 @@ class Slider extends CI_Controller
 
 	public function get_table_data() 
 	{
-	  check_controller_inner_access(3,1);
-	  $search = $this->input->post('search');
-	  $limit = $this->arr_values['pagination_limit'];
-	  $offset = $this->input->post('offset');
+	    check_controller_inner_access(3, 1);
 
-	  $this->db->like('title', $search);
-	  $this->db->or_like('id', $search);
-	  $this->db->or_like('sub_title', $search);
-	  $this->db->order_by('id desc');
-	  $data['ALLDATA'] = $this->db->get($this->arr_values['table_name'], $limit, $offset)->result();
+	    $search = $this->input->post('search');
+	    $limit = $this->arr_values['pagination_limit'];
+	    $offset = $this->input->post('offset');
 
-	  $total_rows = $this->db->count_all_results($this->arr_values['table_name']);
-	  $pagination_links = '';
-	  $current_page = ($offset / $limit) + 1;
+	    // Apply search filters
+	    $this->db->group_start();
+	    $this->db->like('title', $search);
+	    $this->db->or_like('id', $search);
+	    $this->db->or_like('sub_title', $search);
+	    $this->db->group_end();
+	    $this->db->order_by('id desc');
+	    // Fetch paginated data
+	    $data['ALLDATA'] = $this->db->get($this->arr_values['table_name'], $limit, $offset)->result();
 
-	  if ($total_rows > $limit) {
-	    for ($i = 0; $i < ceil($total_rows / $limit); $i++) 
-	    {
-			  $pagination_links .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . ($i == $current_page - 1 ? 'active-page' : '') . '" style="margin: 5px 3px; border-radius: 25%; font-weight: bold;" data-offset="' . ($i * $limit) . '">' . ($i + 1) . '</a>';
-			}
-	  }
+	    // Rebuild query for count
+	    $this->db->group_start();
+	    $this->db->like('title', $search);
+	    $this->db->or_like('id', $search);
+	    $this->db->or_like('sub_title', $search);
+	    $this->db->group_end();
+	    $total_rows = $this->db->count_all_results($this->arr_values['table_name']);
 
-	  if (!empty($pagination_links)) {
+	    $current_page = ($offset / $limit) + 1;
+	    $total_pages = ceil($total_rows / $limit);
+	    $pagination_links = '';
+
+	    if ($total_pages > 1) {
+	        // Previous link
+	        if ($current_page > 1) {
+	            $prev_offset = ($current_page - 2) * $limit;
+	            $pagination_links .= '<a href="javascript:void(0)" class="pagination-link btn btn-sm btn-dark" data-offset="' . $prev_offset . '">&lt;</a>';
+	        }
+
+	        // Always show first 2 pages
+	        for ($i = 1; $i <= min(2, $total_pages); $i++) {
+	            $offset_val = ($i - 1) * $limit;
+	            $pagination_links .= '<a href="javascript:void(0)" class="pagination-link btn btn-primary btn-sm ' . ($i == $current_page ? 'active-page' : '') . '" data-offset="' . $offset_val . '">' . $i . '</a>';
+	        }
+
+	        // Show dots if needed
+	        if ($current_page > 4) {
+	            $pagination_links .= '<span style="margin: 0 5px;">...</span>';
+	        }
+
+	        // Show current-1, current, current+1 if in range
+	        for ($i = max(3, $current_page - 1); $i <= min($total_pages - 2, $current_page + 1); $i++) {
+	            $offset_val = ($i - 1) * $limit;
+	            $pagination_links .= '<a href="javascript:void(0)" class="pagination-link btn btn-primary btn-sm ' . ($i == $current_page ? 'active-page' : '') . '" data-offset="' . $offset_val . '">' . $i . '</a>';
+	        }
+
+	        // Show dots if needed
+	        if ($current_page < $total_pages - 3) {
+	            $pagination_links .= '<span style="margin: 0 5px;">...</span>';
+	        }
+
+	        // Always show last 2 pages
+	        for ($i = max($total_pages - 1, 3); $i <= $total_pages; $i++) {
+	            $offset_val = ($i - 1) * $limit;
+	            $pagination_links .= '<a href="javascript:void(0)" class="pagination-link btn btn-primary btn-sm ' . ($i == $current_page ? 'active-page' : '') . '" data-offset="' . $offset_val . '">' . $i . '</a>';
+	        }
+
+	        // Next link
+	        if ($current_page < $total_pages) {
+	            $next_offset = $current_page * $limit;
+	            $pagination_links .= '<a href="javascript:void(0)" class="pagination-link btn btn-sm btn-dark" data-offset="' . $next_offset . '">&gt;</a>';
+	        }
+	    }
+
 	    $data['pagination_links'] = $pagination_links;
-	  } else {
-	    $data['pagination_links'] = '';
-	  }
 
+	    $data['upload_path'] = $this->arr_values['upload_path'];
+	    $data['view_url'] = base_url('admin_con/' . $this->arr_values['view_url'] . '/view/');
+	    $data['edit_url'] = base_url('admin_con/' . $this->arr_values['edit_url'] . '/edit/');
+	    $data['delete_url'] = base_url('admin_con/' . $this->arr_values['delete_url'] . '/delete/');
 
-	  $total_pages = ceil($total_rows / $limit);
+	    $definevariable = array(
+	        'ALLDATA' => $data['ALLDATA'],
+	        'upload_path' => $data['upload_path'],
+	        'view_url' => $data['view_url'],
+	        'edit_url' => $data['edit_url'],
+	        'delete_url' => $data['delete_url'],
+	        'limit' => $limit,
+	        'total_rows' => $total_rows,
+	        'offset' => $offset,
+	        'total_pages' => $total_pages,
+	    );
 
-	  $data['upload_path'] = $this->arr_values['upload_path'];
-	  $data['view_url'] = base_url('admin_con/'.$this->arr_values['view_url'].'/view/');
-	  $data['edit_url'] = base_url('admin_con/'.$this->arr_values['edit_url'].'/edit/');
-	  $data['delete_url'] = base_url('admin_con/'.$this->arr_values['delete_url'].'/delete/');
+	    $html = $this->load->view($this->arr_values['table_url'], $definevariable, true);
 
-	  $definevariable = array(
-	  	'ALLDATA' => $data['ALLDATA'],
-	  	'upload_path'=>$data['upload_path'],
-	  	'view_url'=>$data['view_url'],
-	  	'edit_url'=>$data['edit_url'],
-	  	'delete_url'=>$data['delete_url'],
-	  	'limit'=>$limit,
-	  	'total_rows'=>$total_rows,
-	  	'offset'=>$offset,
-	  	'total_pages'=>$total_pages,
-	  );
-
-	  $html = $this->load->view($this->arr_values['table_url'], $definevariable, true);
-	  echo json_encode(array('html' => $html, 'pagination_links' => $data['pagination_links'],'limit'=>$limit));
+	    echo json_encode(array(
+	        'html' => $html,
+	        'pagination_links' => $pagination_links,
+	        'limit' => $limit
+	    ));
 	}
+
 
 
 
@@ -223,7 +270,7 @@ class Slider extends CI_Controller
 			$content = $this->input->post('content');		
 			$status = $this->input->post('status');						
 			$modifieddate = date('Y-m-d H:i:s');
-
+			/*upodate dtaa*/
 			$updatedata = array(
 				"image"=>$image,
 				"title"=>$title,

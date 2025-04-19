@@ -42,6 +42,35 @@
 				               <label>Content 2 <span class="text-danger">*</span></label>
 				               <textarea name="text" class="summernote form-control" id="contents" title="Contents">qwer qw</textarea>
 				            </div>
+
+
+                         <div class="col-6 form-group ">
+                           <label>Select Category</label>
+                           <select class="selectpicker  form-control" required name="cat_id" data-style="btn-default" data-live-search="true" id="category">
+                              <option>Select Category</option>
+                              <?php
+                              $cat = $this->db->get_where('categories',array('status'=>1))->result_object();
+                              foreach($cat as $data)
+                                 { ?>
+                              <option value="<?=$data->id ?>"><?=$data->name ?></option>
+                           <?php } ?>
+                           </select>
+                        </div>
+
+                        <div class="col-6 form-group ">
+                           <label>Select Sub Category</label>
+                           <select class="form-control" required name="sub_cat_id" data-style="btn-default" data-live-search="true" id="sub-category">
+                              
+                           </select>
+                        </div>
+
+
+
+
+
+
+
+
 				      </div>
 				   </div>
 				</div>
@@ -130,6 +159,42 @@
       
    <?php $this->load->view('admin/include/theams') ?>
    <?php $this->load->view('admin/include/allscript') ?>
+
+
+   <script>
+
+    $(document).on("change", "#category",(function(e) {
+      login_distibuter();
+    }));
+
+    function login_distibuter()
+    {
+        var cat_id = $("#category").val();
+
+        var form = new FormData();
+        form.append("cat_id", cat_id);
+       
+        var settings = {
+          "url": "<?=base_url() ?>admin_con/product/sub_categ",
+          "method": "POST",
+          "dataType": "json",
+          "timeout": 0,
+          "processData": false,
+          "mimeType": "multipart/form-data",
+          "contentType": false,
+          "data": form
+        };
+
+        $.ajax(settings).done(function (response) 
+        {
+          console.log(response.data);
+          $("#sub-category").html(response.data);
+          
+        });
+    }
+
+</script>
+
 
    </body>
 </html>
