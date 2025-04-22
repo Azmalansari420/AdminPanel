@@ -58,6 +58,24 @@ $sitesetting = $this->crud->fetchdatabyid('1','site_setting');
             </ul>
          </li> -->
 
+
+
+         <!-- <li class="has-sub">
+            <a href="#">
+            <span class="nav-icon"><i class="fa fa-cog bg-gradient-orange text-white"></i></span>
+            <span class="nav-text">Componey Profile</span>
+            <span class="nav-caret"><b class="caret"></b></span>
+            </a>
+            <ul class="nav-submenu">
+               <li class="<?php if($currentURL==base_url('admin_con/content/edit/1')) echo 'active'; ?>"><a href="<?php echo base_url('admin_con/content/edit/1'); ?>"><span class="nav-text">About Us</span></a>
+               </li>
+               <li class="<?php if($currentURL==base_url('admin_con/content/edit/2')) echo 'active'; ?>"><a href="<?php echo base_url('admin_con/content/edit/2'); ?>"><span class="nav-text">Privacy Policy</span></a>
+               </li>
+               <li class="<?php if($currentURL==base_url('admin_con/content/edit/3')) echo 'active'; ?>"><a href="<?php echo base_url('admin_con/content/edit/3'); ?>"><span class="nav-text">Terms & Conditions</span></a>
+               </li>
+            </ul>
+         </li> -->
+
          
        
          <li class="nav-divider"></li>
