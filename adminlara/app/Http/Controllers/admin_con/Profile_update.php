@@ -25,6 +25,7 @@ class Profile_update extends Controller
 
 	public function loadForm()
     {
+        checkAdminSession();
         // check_admin_login();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];

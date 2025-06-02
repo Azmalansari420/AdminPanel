@@ -45,6 +45,7 @@ class AdminAuthController extends Controller
     /*dashboard page*/
     public function dashboard()
     {
+        checkAdminSession();
         return view('admin/dashboard');
     }
 

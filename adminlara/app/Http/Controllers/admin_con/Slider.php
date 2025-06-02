@@ -27,16 +27,19 @@ class Slider extends Controller
                             /*delete*/
                             'delete_single_url'=>'admin_con/slider/delete_data',
                             'multiple_delete'=>'admin_con/slider/multiple_delete_data',
-                            'check_image'=>true,    
+                            'check_image'=>true,
+                            'controller_name'=>'slider',
+                            'page_name'=>'slider-details',    
 
                            ); 
 
 
 
 
-    // Display all slider
+    // Display all 
     public function listing()
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $table_data_page_url = $this->arr_values['table_data_page_url'];
@@ -89,6 +92,7 @@ class Slider extends Controller
     /*--------------------add-----------------------*/
     public function add_page_url()
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $add_in_database_url = $this->arr_values['add_in_database_url'];
         return view($this->arr_values['add_page_view'], compact('page_title','add_in_database_url'));
@@ -109,22 +113,36 @@ class Slider extends Controller
         }
 
         $title = $request->input('title');
-        $sub_title = $request->input('sub_title');
+        $slug = slug($title);
         $content = $request->input('content');
         $status = $request->input('status');
         $addeddate = now();
 
         $insertdata = [
             "title"=>$title,
-            "slug"=>slug($title),
-            "sub_title"=>$sub_title,
+            "slug"=>$slug,
             "content"=>$content,
             "image"=>$imageName,
             "status"=>$status,
             "addeddate"=>$addeddate
         ];
 
-        DB::table($this->arr_values['table_name'])->insert($insertdata);
+        $insert_id = DB::table($this->arr_values['table_name'])->insertGetId($insertdata);
+
+        /*table controller*/
+        $old_slug_data = DB::table($this->arr_values['table_name'])->where('id', $insert_id)->select('slug')->first();
+        $old_slug = $old_slug_data->slug ?? '';
+        $new_slug = insert_slug(
+            $slug,
+            $insert_id,
+            $this->arr_values['table_name'],
+            $this->arr_values['controller_name'],
+            $old_slug,
+            $this->arr_values['page_name']
+        );
+        insert_meta_tags($new_slug, $old_slug);
+        DB::table($this->arr_values['table_name'])->where('id', $insert_id)->update(['slug' => $new_slug]);
+
         return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Added Successfully.');
     }
 
@@ -132,6 +150,7 @@ class Slider extends Controller
     /*--------------------update/edit page----------------------------*/
     public function edit_page_url($id)
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $update_in_database_url = $this->arr_values['update_in_database_url'];
@@ -167,21 +186,36 @@ class Slider extends Controller
         }
 
         $title = $request->input('title');
-        $sub_title = $request->input('sub_title');
+        $slug = slug($title);
         $content = $request->input('content');
         $status = $request->input('status');
         $modifieddate = now();
 
         $upadatedata = [
             "title"=>$title,
-            "slug"=>slug($title),
-            "sub_title"=>$sub_title,
+            "slug"=>$slug,
             "content"=>$content,
             "image"=>$imageName,
             "status"=>$status,
             "modifieddate"=>$modifieddate
         ];
         DB::table($this->arr_values['table_name'])->where('id', $id)->update($upadatedata);
+
+        /*table controller*/
+        $insert_id = $id;
+        $old_slug_data = DB::table($this->arr_values['table_name'])->where('id', $insert_id)->select('slug')->first();
+        $old_slug = $old_slug_data->slug ?? '';
+        $new_slug = insert_slug(
+            $slug,
+            $insert_id,
+            $this->arr_values['table_name'],
+            $this->arr_values['controller_name'],
+            $old_slug,
+            $this->arr_values['page_name']
+        );
+        insert_meta_tags($new_slug, $old_slug);
+        DB::table($this->arr_values['table_name'])->where('id', $insert_id)->update(['slug' => $new_slug]);
+
         return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Updated Successfully.');
     }
 

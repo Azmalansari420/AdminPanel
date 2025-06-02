@@ -52,21 +52,151 @@ use Illuminate\Support\Facades\Session;
     return $dateformet;
   }
 
+  function checkAdminSession()
+    {
+        if (!session()->has('admin_id')) {
+            echo '<script>window.location = "' . route('admin/logout') . '";</script>';
+            exit; // Stop further execution
+        }
+    }
 
-  // function check_admin_login()
-  //   {
-  //       if (Session::has('admin_id')) {
-  //           // Admin is logged in
-  //           return null;  // No redirection needed
-  //       } else {
-  //           $previousUrl = request()->url();  
-  //           Session::put('last_visited_url', $previousUrl);  
 
-  //           // Redirect to login page
-  //           return redirect('/admin')->with('error', 'Please login to continue.');
-  //       }
-  //   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function insert_slug($slug, $p_id, $table_name, $controller_name, $old_slug = '', $page_name = '')
+{
+    $data = [
+        "slug"            => $slug,
+        "table_name"      => $table_name,
+        "page_name"       => $page_name,
+        "controller_name" => $controller_name,
+        "p_id"            => $p_id,
+    ];
+
+    DB::table('slugs')->where(['table_name' => $table_name, 'p_id' => $p_id])->delete();
+
+    if (!DB::table('slugs')->where('slug', $slug)->exists()) {
+        DB::table('slugs')->insert($data);
+    } else {
+        for ($i = 1; $i <= 10; $i++) {
+            $slug2 = $slug . '-' . $i;
+            if (!DB::table('slugs')->where('slug', $slug2)->exists()) {
+                $data['slug'] = $slug2;
+                DB::table('slugs')->insert($data);
+                $slug = $slug2;
+                break;
+            }
+        }
+    }
+    return $slug;
+}
+
+
+function insert_meta_tags($slug, $old_slug = '')
+{
+    $data = [
+        "meta_title"       => Request::input("meta_title"),
+        "meta_keyword"     => Request::input("meta_keyword"),
+        "meta_description" => Request::input("meta_description"),
+        "meta_auther"      => Request::input("meta_auther"),
+        "slug"             => $slug,
+    ];
+
+    DB::table('meta_tags')->where('slug', $old_slug)->delete();
+
+    if (!DB::table('meta_tags')->where('slug', $slug)->exists()) {
+        DB::table('meta_tags')->insert($data);
+    } else {
+        DB::table('meta_tags')->where('slug', $slug)->update($data);
+    }
+}
+
+if (!function_exists('get_meta_tags')) 
+{
+    function get_meta_tags()
+    {
+        $currentUrl = Request::path(); // e.g., 'about-us'
+        $slug = $currentUrl === '/' ? 'home' : $currentUrl;
+
+        $meta = DB::table('meta_tags')
+            ->select('meta_title', 'meta_keyword', 'meta_description', 'meta_auther')
+            ->where('slug', $slug)
+            ->first();
+
+        if (!$meta) {
+            $meta = DB::table('meta_tags')
+                ->select('meta_title', 'meta_keyword', 'meta_description', 'meta_auther')
+                ->where('slug', 'home')
+                ->first();
+        }
+
+        if (!$meta) {
+            return '';
+        }
+
+        return <<<HTML
+        <title>{$meta->meta_title}</title>
+        <meta name="keywords" content="{$meta->meta_keyword}">
+        <meta name="description" content="{$meta->meta_description}">
+        <meta name="meta_auther" content="{$meta->meta_auther}">
+        HTML;
+    }
+}
+
+
+
+
+  
 
 
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\admin_con\Slider;
 use App\Http\Controllers\admin_con\Contact;
 use App\Http\Controllers\admin_con\Testimonials;
 use App\Http\Controllers\admin_con\Multipleimage;
+use App\Http\Controllers\admin_con\Blog;
 use Illuminate\Support\Facades\Route;
 
 // Admin Authentication Routes
@@ -98,7 +99,23 @@ Route::prefix('admin/multipleimage')->group(function () {
     Route::post('/load_more_singleimage', [Multipleimage::class, 'load_more_singleimage'])->name('admin/multipleimage/load_more_singleimage');
     /*add morre multiple*/
     Route::post('/load-more-multiple-image', [Multipleimage::class, 'load_more_multiimage'])->name('admin/multipleimage/load_more_multiimage');
-
-
-
 });
+
+
+/*------------------------blog----------------------*/
+Route::prefix('admin/blog')->group(function () {
+    Route::get('/', [Blog::class, 'listing'])->name('admin/blog/list');
+    Route::post('/table', [Blog::class, 'getTableData'])->name('admin/blog/table');
+    /*------add------*/
+    Route::get('/add', [Blog::class, 'add_page_url'])->name('admin/blog/add');
+    Route::post('/', [Blog::class, 'datastore_in_database'])->name('admin_con/blog/add_data');
+    /*------upadte------*/
+    Route::get('/edit/{id}', [Blog::class, 'edit_page_url'])->name('admin/blog/edit');
+    Route::post('/edit/{id}', [Blog::class, 'dataupdate_in_database'])->name('admin_con/blog/update_data');
+    /*------status------*/
+    Route::post('/update_status', [Blog::class, 'updateStatus'])->name('admin/blog/update_status');
+    /*------delete------*/
+    Route::delete('/delete_data/{id}', [Blog::class, 'delete_data'])->name('admin_con/blog/delete_data');
+    Route::delete('/multiple_delete_data', [Blog::class, 'multiple_delete_data'])->name('admin_con/blog/multiple_delete_data');
+});
+

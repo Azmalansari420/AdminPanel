@@ -30,6 +30,7 @@ class Contact extends Controller
     // Display all contact
     public function listing()
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $table_data_page_url = $this->arr_values['table_data_page_url'];
@@ -83,6 +84,7 @@ class Contact extends Controller
    /*---------------view page--------------*/
    public function view_page_url($id)
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $EDITDATA = DB::table($this->arr_values['table_name'])->where('id', $id)->first();

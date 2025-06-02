@@ -24,6 +24,7 @@ class Site_setting extends Controller
 
     public function loadForm($id)
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $redirect_route_path = $this->arr_values['redirect_route_path'];

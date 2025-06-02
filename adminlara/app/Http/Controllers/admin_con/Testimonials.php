@@ -37,6 +37,7 @@ class Testimonials extends Controller
     // Display all testimonials
     public function listing()
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $table_data_page_url = $this->arr_values['table_data_page_url'];
@@ -91,6 +92,7 @@ class Testimonials extends Controller
     /*--------------------add-----------------------*/
     public function add_page_url()
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $add_in_database_url = $this->arr_values['add_in_database_url'];
         return view($this->arr_values['add_page_view'], compact('page_title','add_in_database_url'));
@@ -134,6 +136,7 @@ class Testimonials extends Controller
     /*--------------------update/edit page----------------------------*/
     public function edit_page_url($id)
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $update_in_database_url = $this->arr_values['update_in_database_url'];

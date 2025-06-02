@@ -35,6 +35,8 @@ class Multipleimage extends Controller
                             /*add-multiple-image*/ 
                             'add_more_multipage'=>'admin/multipleimage/add-multiple-image', 
                             'add_more_multipage_route'=>'admin/multipleimage/load_more_multiimage', 
+                            'controller_name'=>'multipleimage',
+                            'page_name'=>'multipleimage-details',
 
                            ); 
 
@@ -44,6 +46,7 @@ class Multipleimage extends Controller
     // Display all multipleimage
     public function listing()
     {
+        checkAdminSession();
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $table_data_page_url = $this->arr_values['table_data_page_url'];
@@ -96,6 +99,7 @@ class Multipleimage extends Controller
     /*--------------------add-----------------------*/
     public function add_page_url(Request $request)
     {
+        checkAdminSession();
         $count = $request->input('count', 0);
         $upload_path = $this->arr_values['upload_path'];
         $page_title = $this->arr_values['page_title'];
@@ -210,7 +214,22 @@ class Multipleimage extends Controller
             "addeddate"=>$addeddate
         ];
 
-        DB::table($this->arr_values['table_name'])->insert($insertdata);
+        $insert_id = DB::table($this->arr_values['table_name'])->insertGetId($insertdata);
+
+        /*table controller*/
+        $old_slug_data = DB::table($this->arr_values['table_name'])->where('id', $insert_id)->select('slug')->first();
+        $old_slug = $old_slug_data->slug ?? '';
+        $new_slug = insert_slug(
+            $slug,
+            $insert_id,
+            $this->arr_values['table_name'],
+            $this->arr_values['controller_name'],
+            $old_slug,
+            $this->arr_values['page_name']
+        );
+        insert_meta_tags($new_slug, $old_slug);
+        DB::table($this->arr_values['table_name'])->where('id', $insert_id)->update(['slug' => $new_slug]);
+
         return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Added Successfully.');
     }
 
@@ -218,6 +237,7 @@ class Multipleimage extends Controller
     /*--------------------update/edit page----------------------------*/
     public function edit_page_url(Request $request,$id)
     {
+        checkAdminSession();
         $count = $request->input('count', 0);
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
@@ -350,6 +370,21 @@ class Multipleimage extends Controller
 
 
         DB::table($this->arr_values['table_name'])->where('id', $id)->update($upadatedata);
+        /*table controller*/
+        $insert_id = $id;
+        $old_slug_data = DB::table($this->arr_values['table_name'])->where('id', $insert_id)->select('slug')->first();
+        $old_slug = $old_slug_data->slug ?? '';
+        $new_slug = insert_slug(
+            $slug,
+            $insert_id,
+            $this->arr_values['table_name'],
+            $this->arr_values['controller_name'],
+            $old_slug,
+            $this->arr_values['page_name']
+        );
+        insert_meta_tags($new_slug, $old_slug);
+        DB::table($this->arr_values['table_name'])->where('id', $insert_id)->update(['slug' => $new_slug]);
+        
         return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Updated Successfully.');
     }
 

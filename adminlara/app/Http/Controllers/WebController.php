@@ -32,10 +32,67 @@ class WebController extends Controller
         DB::table('contact')->insert($formData);
 
         // Send email
-        Mail::send(new ContactFormMail($formData));
+        // Mail::send(new ContactFormMail($formData));
 
-        return redirect()->back()->with('success', 'Form submitted and email sent successfully!');
+        return redirect()->route('thankyou')->with('success', 'Form submitted and email sent successfully!');
     }
+
+
+
+
+
+
+    public function loadPage($slug = '')
+    {
+        if (empty($slug)) {
+            $slug = 'index.php';
+        }
+
+        // Find slug in DB
+        $slugData = DB::table('slugs')->where('slug', $slug)->first();
+
+        if ($slugData) {
+            $page = $slugData->page_name;
+            $table = $slugData->table_name;
+            $id = $slugData->p_id;
+        } else {
+            // Fallback to default Laravel views
+            $page = $slug;
+            $table = null;
+            $id = null;
+        }
+
+        // If the view file exists
+        if (view()->exists($page)) {
+            $data = [
+                'sitesetting' => DB::table('site_setting')->find(1),
+                'meta_data'   => DB::table('meta_tags')->get(),
+            ];
+
+            if ($table && $id) {
+                $data['EDITDATA'] = DB::table($table)->where('id', $id)->get();
+            }
+
+            return view($page, $data);
+        } else {
+           // Redirect to 404 page
+        abort(404);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
