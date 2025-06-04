@@ -161,13 +161,15 @@ function insert_meta_tags($slug, $old_slug = '')
     }
 }
 
-if (!function_exists('get_meta_tags')) 
-{
-    function get_meta_tags()
+function custom_meta_tags($slug = '')
     {
-        $currentUrl = Request::path(); // e.g., 'about-us'
-        $slug = $currentUrl === '/' ? 'home' : $currentUrl;
+        if (empty($slug)) {
+            // Use request path if slug not passed
+            $currentUrl = Request::path();
+            $slug = ($currentUrl === '/' || $currentUrl === '') ? 'home' : $currentUrl;
+        }
 
+        // Try to get meta data
         $meta = DB::table('meta_tags')
             ->select('meta_title', 'meta_keyword', 'meta_description', 'meta_auther')
             ->where('slug', $slug)
@@ -184,14 +186,14 @@ if (!function_exists('get_meta_tags'))
             return '';
         }
 
-        return <<<HTML
-        <title>{$meta->meta_title}</title>
-        <meta name="keywords" content="{$meta->meta_keyword}">
-        <meta name="description" content="{$meta->meta_description}">
-        <meta name="meta_auther" content="{$meta->meta_auther}">
-        HTML;
+        $html = '';
+        $html .= '<title>' . $meta->meta_title . '</title>' . PHP_EOL;
+        $html .= '<meta name="keywords" content="' . $meta->meta_keyword . '">' . PHP_EOL;
+        $html .= '<meta name="description" content="' . $meta->meta_description . '">' . PHP_EOL;
+        $html .= '<meta name="meta_auther" content="' . $meta->meta_auther . '">' . PHP_EOL;
+
+        return $html;
     }
-}
 
 
 

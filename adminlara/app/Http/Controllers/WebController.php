@@ -66,7 +66,7 @@ class WebController extends Controller
         if (view()->exists($page)) {
             $data = [
                 'sitesetting' => DB::table('site_setting')->find(1),
-                'meta_data'   => DB::table('meta_tags')->get(),
+                'meta_html'   => custom_meta_tags($slug),
             ];
 
             if ($table && $id) {
@@ -79,7 +79,6 @@ class WebController extends Controller
         abort(404);
         }
     }
-
 
 
 

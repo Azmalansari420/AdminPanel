@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{$EDITDATA[0]->name}}</title>
+  {!! $meta_html ?? '' !!}
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
