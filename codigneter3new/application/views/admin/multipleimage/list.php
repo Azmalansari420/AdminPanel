@@ -41,6 +41,10 @@
 
 <script>
 
+    $('#select-all').on('click', function () {
+        $('.multiple_delete').prop('checked', this.checked);
+      });
+
 /*load table data*/
    $.ajax({
      type: 'POST',

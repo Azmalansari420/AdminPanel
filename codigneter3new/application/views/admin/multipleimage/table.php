@@ -1,7 +1,7 @@
 <table class="table table-striped table-td-valign-middle table-bordered bg-white">
   <thead>
     <tr>
-      <th width="1%">#</th>
+      <th width="1%"><input type="checkbox" id="select-all"></th>
       <th>Image</th>
       <th>Title</th>
       <th>Status</th>
@@ -48,6 +48,10 @@
 </table>
 
 <script>
+  $('#select-all').on('click', function () {
+    $('.multiple_delete').prop('checked', this.checked);
+  });
+  
     $('.delete-btn-ajax').on('click', function() {
       event.preventDefault();
       var id = $(this).data('id');
