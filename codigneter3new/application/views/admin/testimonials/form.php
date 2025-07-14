@@ -45,7 +45,7 @@
                            <input type="hidden" class="form-control" name="oldimage" value="<?= @$EDITDATA->image; ?>">
                         </div>
 
-                        <div class="col-12 form-group m-b-0">
+                        <div class="col-12 form-group ">
                            <label>Select Status</label>
                            <select class="selectpicker  form-control" required name="status" data-style="btn-default" data-live-search="true" >
                               <option value="1"  <?= (isset($EDITDATA->status) && $EDITDATA->status == '1') ? 'selected' : '' ?>>Show</option>

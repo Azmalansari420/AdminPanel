@@ -43,7 +43,7 @@
                         <?php } ?>
                         </div>
 
-                        <div class="col-12 form-group m-b-0">
+                        <div class="col-12 form-group">
                            <label>Select Status</label>
                            <select class=" form-control" required name="status" disabled>
                               <option value="1"  <?php if($EDITDATA[0]->status==1)echo 'selected'; ?>>Show</option>
