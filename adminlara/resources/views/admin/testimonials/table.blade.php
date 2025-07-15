@@ -15,7 +15,11 @@
                 <td>{{ $key + 1 + $offset }}
                     <input type="checkbox" name="multiple_delete[]" value="{{ $data->id }}" class="multiple_delete">
                 </td>
-                <td><img src="{{url('public/'.$upload_path)}}/{{ $data->image }}" width="75px" onerror="this.src='{{url('public/media/uploads/not-found.jpg')}}'"></td>
+                <td>
+                    <a href="{{url('public/'.$upload_path)}}/{{ $data->image }}" target="_blank">
+                        <img src="{{url('public/'.$upload_path)}}/{{ $data->image }}" width="75px" onerror="this.src='{{url('public/media/uploads/not-found.jpg')}}'">
+                    </a>
+                </td>
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->position }}</td>
                 <td>

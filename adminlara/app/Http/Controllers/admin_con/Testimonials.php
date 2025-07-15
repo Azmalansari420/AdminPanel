@@ -14,27 +14,31 @@ class Testimonials extends Controller
                             'table_name'=>'testimonials',
                             'upload_path'=>'media/uploads/testimonials/',
                             'table_data_page_url'=>'admin/testimonials/table',
-                            'table_data_pagination_limit'=>15,
+                            'table_data_pagination_limit'=>10,
                             'load_list_path'=>'admin/testimonials/list',
+                            /*load form path and update url*/
+                            'add_form_path'=>'admin/testimonials/form',
+                            'addupdate_form'=>'admin_con/testimonials/storeOrUpdate',
                             /*add page*/
-                            'add_page_view'=>'admin/testimonials/add',
                             'add_page_link'=>'testimonials/add',
-                            'add_in_database_url'=>'admin_con/testimonials/add_data',
                             /*edit page*/
                             'edit_page_url'=>'admin/testimonials/edit',
-                            'update_in_database_url'=>'admin_con/testimonials/update_data',
+                            'view_page_url'=>'admin/testimonials/view',
+                            /*status*/
                             'status_url'=>'admin/testimonials/update_status',
                             /*delete*/
                             'delete_single_url'=>'admin_con/testimonials/delete_data',
                             'multiple_delete'=>'admin_con/testimonials/multiple_delete_data',
-                            'check_image'=>true,    
+                            'check_image'=>true,
+                            'controller_name'=>'testimonials',
+                            'page_name'=>'testimonials-details',    
 
                            ); 
 
 
 
 
-    // Display all testimonials
+    // Display all 
     public function listing()
     {
         checkAdminSession();
@@ -44,42 +48,68 @@ class Testimonials extends Controller
         $table_data_pagination_limit = $this->arr_values['table_data_pagination_limit'];
         $add_page_link = $this->arr_values['add_page_link'];
         $edit_page_url = $this->arr_values['edit_page_url'];
+        $view_page_url = $this->arr_values['view_page_url'];
         $status_url = $this->arr_values['status_url'];
         $delete_single_url = $this->arr_values['delete_single_url'];
         $multiple_delete = $this->arr_values['multiple_delete'];
 
         $ALLDATA = DB::table($this->arr_values['table_name'])->orderBy('id', 'desc')->get();
-        return view($this->arr_values['load_list_path'], compact('ALLDATA','page_title', 'upload_path','table_data_page_url','table_data_pagination_limit','add_page_link',"edit_page_url","status_url","delete_single_url","multiple_delete"));
+        return view($this->arr_values['load_list_path'], compact('ALLDATA','page_title', 'upload_path','table_data_page_url','table_data_pagination_limit','add_page_link',"edit_page_url","status_url","delete_single_url","multiple_delete","view_page_url"));
     }
     /*get table from ajax*/
-    public function getTableData(Request $request)
+   public function getTableData(Request $request)
     {
         $search = $request->input('search', '');
         $limit = $this->arr_values['table_data_pagination_limit'];
         $offset = $request->input('offset', 0);
-
         $upload_path = $this->arr_values['upload_path'];
         $edit_page_url = $this->arr_values['edit_page_url'];
-
+        $view_page_url = $this->arr_values['view_page_url'];
         $query = DB::table($this->arr_values['table_name']);
         if (!empty($search)) {
             $query->where('name', 'LIKE', "%{$search}%")
-                  ->orWhere('position', 'LIKE', "%{$search}%")
-                  ->orWhere('content', 'LIKE', "%{$search}%")
                   ->orWhere('id', 'LIKE', "%{$search}%");
         }
-
         $totalRows = $query->count();
         $ALLDATA = $query->offset($offset)->limit($limit)->orderBy('id', 'desc')->get();
         $totalPages = ceil($totalRows / $limit);
         $currentPage = ($offset / $limit) + 1;
+        // Generate ellipsis-style pagination
         $paginationLinks = '';
-        for ($i = 0; $i < $totalPages; $i++) 
+        $paginationLinks .= '<a href="#" class="pagination-link btn btn-light btn-sm" data-offset="' . max(0, $offset - $limit) . '">&lt;</a>';
+        if ($totalPages <= 5) {
+            for ($i = 1; $i <= $totalPages; $i++) {
+                $active = $i == $currentPage ? 'active-page' : '';
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . $active . '" style="margin: 5px 3px; border-radius: 25%;" data-offset="' . (($i - 1) * $limit) . '">' . $i . '</a>';
+            }
+        } else 
         {
-            $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . ($i == $currentPage - 1 ? 'active-page' : '') . '" style="margin: 5px 3px; border-radius: 25%; font-weight: bold;" data-offset="' . ($i * $limit) . '">' . ($i + 1) . '</a>';
+            if ($currentPage > 2) {
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm" data-offset="0">1</a>';
+                if ($currentPage > 3) {
+                    $paginationLinks .= '<span class="btn btn-light btn-sm disabled">...</span>';
+                }
+            }
+
+            $start = max(1, $currentPage - 1);
+            $end = min($totalPages, $currentPage + 1);
+
+            for ($i = $start; $i <= $end; $i++) {
+                $active = $i == $currentPage ? 'active-page' : '';
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . $active . '" data-offset="' . (($i - 1) * $limit) . '">' . $i . '</a>';
+            }
+
+            if ($currentPage < $totalPages - 1) {
+                if ($currentPage < $totalPages - 2) {
+                    $paginationLinks .= '<span class="btn btn-light btn-sm disabled">...</span>';
+                }
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm" data-offset="' . (($totalPages - 1) * $limit) . '">' . $totalPages . '</a>';
+            }
         }
 
-        $view = view($this->arr_values['table_data_page_url'], compact('ALLDATA', 'totalRows', 'totalPages','offset','upload_path','edit_page_url'))->render();
+        $paginationLinks .= '<a href="#" class="pagination-link btn btn-light btn-sm" data-offset="' . min($offset + $limit, ($totalPages - 1) * $limit) . '">&gt;</a>';
+
+        $view = view($this->arr_values['table_data_page_url'], compact('ALLDATA', 'totalRows', 'totalPages','offset','upload_path','edit_page_url','view_page_url'))->render();
 
         return response()->json([
             'html' => $view,
@@ -89,47 +119,14 @@ class Testimonials extends Controller
     }
 
 
+
     /*--------------------add-----------------------*/
     public function add_page_url()
     {
         checkAdminSession();
-        $page_title = $this->arr_values['page_title'];
-        $add_in_database_url = $this->arr_values['add_in_database_url'];
-        return view($this->arr_values['add_page_view'], compact('page_title','add_in_database_url'));
-    }
-    // add new data
-    public function datastore_in_database(Request $request)
-    {
-        date_default_timezone_set('Asia/Kolkata');
-        $uploadPath = public_path($this->arr_values['upload_path']);
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
-
-        $imageName = null;
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move($uploadPath, $imageName);
-        }
-
-        $name = $request->input('name');
-        $position = $request->input('position');
-        $content = $request->input('content');
-        $status = $request->input('status');
-        $addeddate = now();
-
-        $insertdata = [
-            "name"=>$name,
-            "slug"=>slug($name),
-            "position"=>$position,
-            "content"=>$content,
-            "image"=>$imageName,
-            "status"=>$status,
-            "addeddate"=>$addeddate
-        ];
-
-        DB::table($this->arr_values['table_name'])->insert($insertdata);
-        return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Added Successfully.');
+        $page_title = 'Add '.$this->arr_values['page_title'];
+        $addupdate_form = $this->arr_values['addupdate_form'];
+        return view($this->arr_values['add_form_path'], compact('page_title','addupdate_form'));
     }
 
 
@@ -137,58 +134,28 @@ class Testimonials extends Controller
     public function edit_page_url($id)
     {
         checkAdminSession();
-        $page_title = $this->arr_values['page_title'];
+        $page_title = 'Update '.$this->arr_values['page_title'];
+        $addupdate_form = $this->arr_values['addupdate_form'];
         $upload_path = $this->arr_values['upload_path'];
-        $update_in_database_url = $this->arr_values['update_in_database_url'];
         $EDITDATA = DB::table($this->arr_values['table_name'])->where('id', $id)->first();
         if (!$EDITDATA) {
             return redirect()->route($this->arr_values['load_list_path'])->with('message', 'not found.');
         }
-        return view($this->arr_values['edit_page_url'], compact('EDITDATA','page_title','upload_path','update_in_database_url'));
-    }
+        return view($this->arr_values['add_form_path'], compact('EDITDATA','page_title','upload_path','addupdate_form'));
+    }  
 
-    /*update*/
-    public function dataupdate_in_database(Request $request, $id)
+     public function view_page_url($id)
     {
-        date_default_timezone_set('Asia/Kolkata');
-
-        $uploadPath = public_path($this->arr_values['upload_path']);
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
+        checkAdminSession();
+        $page_title = 'View '.$this->arr_values['page_title'];
+        $addupdate_form = $this->arr_values['addupdate_form'];
+        $upload_path = $this->arr_values['upload_path'];
+        $EDITDATA = DB::table($this->arr_values['table_name'])->where('id', $id)->first();
+        if (!$EDITDATA) {
+            return redirect()->route($this->arr_values['load_list_path'])->with('message', 'not found.');
         }
-        $imageName = $request->input('oldimage'); 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move($uploadPath, $imageName);
-
-            // Delete old image
-            $oldImagePath = $uploadPath . $request->input('oldimage');
-            if (!empty($request->input('oldimage')) && file_exists($oldImagePath) && is_file($oldImagePath)) 
-            {
-                unlink($oldImagePath);
-            } else {
-                logger('Old image not found or is invalid: ' . $request->input('oldimage'));
-            }
-        }
-
-        $name = $request->input('name');
-        $position = $request->input('position');
-        $content = $request->input('content');
-        $status = $request->input('status');
-        $modifieddate = now();
-
-        $upadatedata = [
-            "name"=>$name,
-            "slug"=>slug($name),
-            "position"=>$position,
-            "content"=>$content,
-            "image"=>$imageName,
-            "status"=>$status,
-            "modifieddate"=>$modifieddate
-        ];
-        DB::table($this->arr_values['table_name'])->where('id', $id)->update($upadatedata);
-        return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Updated Successfully.');
-    }
+        return view($this->arr_values['view_page_url'], compact('EDITDATA','page_title','upload_path','addupdate_form'));
+    } 
 
     /*----------------------------status update----------------------------*/
     public function updateStatus(Request $request)
@@ -209,8 +176,6 @@ class Testimonials extends Controller
             'data' => ['status' => $statusHtml]
         ]);
     }
-
-
     
     /*-------------------------------single delete----------------------------*/
     public function delete_data($id)
@@ -262,6 +227,59 @@ class Testimonials extends Controller
 
     
 
+
+
+
+    /*-------------------add update data here --------------------*/
+
+    public function storeOrUpdate(Request $request)
+    {
+        date_default_timezone_set('Asia/Kolkata');
+
+        $id = $request->input('id'); 
+
+        $uploadPath = public_path($this->arr_values['upload_path']);
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
+        $imageName = $request->input('oldimage'); 
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move($uploadPath, $imageName);
+
+            if (!empty($request->input('oldimage')) && file_exists($uploadPath . $request->input('oldimage'))) {
+                unlink($uploadPath . $request->input('oldimage'));
+            }
+        }
+
+        $name = $request->input('name');
+        $position = $request->input('position');
+        $content = $request->input('content');
+        $status = $request->input('status');
+        $timestamp = now();
+
+        $data = [
+            "name"=>$name,
+            "slug"=>slug($name),
+            "position"=>$position,
+            "content"=>$content,
+            "image"=>$imageName,
+            "status"  => $status
+        ];
+
+        if (empty($id)) {
+            $data['addeddate'] = $timestamp;
+            $insert_id = DB::table($this->arr_values['table_name'])->insertGetId($data);
+        } else {
+            $data['modifieddate'] = $timestamp;
+            DB::table($this->arr_values['table_name'])->where('id', $id)->update($data);
+            $insert_id = $id;
+        }        
+
+        return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Record saved successfully.');
+    }
 
 
 

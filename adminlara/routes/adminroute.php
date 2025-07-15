@@ -27,7 +27,7 @@ Route::prefix('admin/profile')->group(function () {
 /*-------------------------site settings---------------------------*/
 Route::prefix('admin/site_setting')->group(function () {
     Route::get('/edit/{id}', [Site_setting::class, 'loadForm'])->name('admin/site_setting/edit');
-    Route::post('/edit/{id}', [Site_setting::class, 'submitForm'])->name('admin.site_setting.update');
+    Route::post('/edit/{id}', [Site_setting::class, 'submitForm'])->name('admin/site_setting/update');
 });
 
 
@@ -37,10 +37,12 @@ Route::prefix('admin/slider')->group(function () {
     Route::post('/table', [Slider::class, 'getTableData'])->name('admin/slider/table');
     /*------add------*/
     Route::get('/add', [Slider::class, 'add_page_url'])->name('admin/slider/add');
-    Route::post('/', [Slider::class, 'datastore_in_database'])->name('admin_con/slider/add_data');
     /*------upadte------*/
     Route::get('/edit/{id}', [Slider::class, 'edit_page_url'])->name('admin/slider/edit');
-    Route::post('/edit/{id}', [Slider::class, 'dataupdate_in_database'])->name('admin_con/slider/update_data');
+    /*----view----*/
+    Route::get('/view/{id}', [Slider::class, 'view_page_url'])->name('admin/slider/view');
+    /*--single update -delete--*/
+    Route::post('/store', [Slider::class, 'storeOrUpdate'])->name('admin_con/slider/storeOrUpdate');
     /*------status------*/
     Route::post('/update_status', [Slider::class, 'updateStatus'])->name('admin/slider/update_status');
     /*------delete------*/
@@ -68,10 +70,12 @@ Route::prefix('admin/testimonials')->group(function () {
     Route::post('/table', [Testimonials::class, 'getTableData'])->name('admin/testimonials/table');
     /*------add------*/
     Route::get('/add', [Testimonials::class, 'add_page_url'])->name('admin/testimonials/add');
-    Route::post('/', [Testimonials::class, 'datastore_in_database'])->name('admin_con/testimonials/add_data');
     /*------upadte------*/
     Route::get('/edit/{id}', [Testimonials::class, 'edit_page_url'])->name('admin/testimonials/edit');
-    Route::post('/edit/{id}', [Testimonials::class, 'dataupdate_in_database'])->name('admin_con/testimonials/update_data');
+    /*----view----*/
+    Route::get('/view/{id}', [Testimonials::class, 'view_page_url'])->name('admin/testimonials/view');
+    /*--single update -delete--*/
+    Route::post('/store', [Testimonials::class, 'storeOrUpdate'])->name('admin_con/testimonials/storeOrUpdate');
     /*------status------*/
     Route::post('/update_status', [Testimonials::class, 'updateStatus'])->name('admin/testimonials/update_status');
     /*------delete------*/
@@ -80,16 +84,20 @@ Route::prefix('admin/testimonials')->group(function () {
 });
 
 
+
 /*------------------------multipleimage----------------------*/
+
 Route::prefix('admin/multipleimage')->group(function () {
     Route::get('/', [Multipleimage::class, 'listing'])->name('admin/multipleimage/list');
     Route::post('/table', [Multipleimage::class, 'getTableData'])->name('admin/multipleimage/table');
     /*------add------*/
     Route::get('/add', [Multipleimage::class, 'add_page_url'])->name('admin/multipleimage/add');
-    Route::post('/', [Multipleimage::class, 'datastore_in_database'])->name('admin_con/multipleimage/add_data');
     /*------upadte------*/
     Route::get('/edit/{id}', [Multipleimage::class, 'edit_page_url'])->name('admin/multipleimage/edit');
-    Route::post('/edit/{id}', [Multipleimage::class, 'dataupdate_in_database'])->name('admin_con/multipleimage/update_data');
+    /*----view----*/
+    Route::get('/view/{id}', [Multipleimage::class, 'view_page_url'])->name('admin/multipleimage/view');
+    /*--single update -delete--*/
+    Route::post('/store', [Multipleimage::class, 'storeOrUpdate'])->name('admin_con/multipleimage/storeOrUpdate');
     /*------status------*/
     Route::post('/update_status', [Multipleimage::class, 'updateStatus'])->name('admin/multipleimage/update_status');
     /*------delete------*/
@@ -99,6 +107,7 @@ Route::prefix('admin/multipleimage')->group(function () {
     Route::post('/load_more_singleimage', [Multipleimage::class, 'load_more_singleimage'])->name('admin/multipleimage/load_more_singleimage');
     /*add morre multiple*/
     Route::post('/load-more-multiple-image', [Multipleimage::class, 'load_more_multiimage'])->name('admin/multipleimage/load_more_multiimage');
+
 });
 
 
@@ -108,10 +117,12 @@ Route::prefix('admin/blog')->group(function () {
     Route::post('/table', [Blog::class, 'getTableData'])->name('admin/blog/table');
     /*------add------*/
     Route::get('/add', [Blog::class, 'add_page_url'])->name('admin/blog/add');
-    Route::post('/', [Blog::class, 'datastore_in_database'])->name('admin_con/blog/add_data');
     /*------upadte------*/
     Route::get('/edit/{id}', [Blog::class, 'edit_page_url'])->name('admin/blog/edit');
-    Route::post('/edit/{id}', [Blog::class, 'dataupdate_in_database'])->name('admin_con/blog/update_data');
+    /*----view----*/
+    Route::get('/view/{id}', [Blog::class, 'view_page_url'])->name('admin/blog/view');
+    /*--single update -delete--*/
+    Route::post('/store', [Blog::class, 'storeOrUpdate'])->name('admin_con/blog/storeOrUpdate');
     /*------status------*/
     Route::post('/update_status', [Blog::class, 'updateStatus'])->name('admin/blog/update_status');
     /*------delete------*/

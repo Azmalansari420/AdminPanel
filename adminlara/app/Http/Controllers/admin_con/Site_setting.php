@@ -17,8 +17,9 @@ class Site_setting extends Controller
                             'page_title'=>'Site Setting',
                             'table_name'=>'site_setting',
                             'upload_path'=>'media/uploads/site_setting/',
-                            'load_path'=>'admin.site_setting.edit',
-                            'redirect_route_path'=>'admin.site_setting.edit',
+                            'load_path'=>'admin/site_setting/edit',
+                            'redirect_route_path'=>'admin/site_setting/edit',
+                            'update_page_url'=>'admin/site_setting/update',
                            );
 
 
@@ -28,10 +29,9 @@ class Site_setting extends Controller
         $page_title = $this->arr_values['page_title'];
         $upload_path = $this->arr_values['upload_path'];
         $redirect_route_path = $this->arr_values['redirect_route_path'];
-
-        $EDITDATA = DB::table($this->arr_values['table_name'])->where('id',$id)->get();
-
-        return view('admin.site_setting.edit', compact('page_title', 'upload_path', 'redirect_route_path', 'EDITDATA'));
+        $update_page_url = $this->arr_values['update_page_url'];
+        $EDITDATA = DB::table($this->arr_values['table_name'])->where('id',$id)->first();
+        return view($this->arr_values['load_path'], compact('page_title', 'upload_path', 'redirect_route_path', 'EDITDATA','update_page_url'));
     }
 
 
@@ -70,7 +70,7 @@ class Site_setting extends Controller
 
         try {
             DB::table($this->arr_values['table_name'])->where('id', $id)->update($data);
-            return redirect()->route($this->arr_values['redirect_route_path'], ['id' => $id])->with('message', 'Setting updated successfully!');
+            return redirect()->route($this->arr_values['redirect_route_path'], ['id' => $id])->with('message', 'Setting Updated successfully!');
         } 
         catch (\Exception $e) {
             \Log::error('Failed to update: ' . $e->getMessage()); // Log the error for debugging

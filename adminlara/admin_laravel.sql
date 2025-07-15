@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2025 at 02:37 PM
+-- Generation Time: Jul 15, 2025 at 08:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,6 +77,13 @@ CREATE TABLE `contact` (
   `message` text NOT NULL,
   `addeddate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `name`, `email`, `mobile`, `subject`, `message`, `addeddate`) VALUES
+(9, 'tets', 'test@gmail.com', '123456', 'enquiry', '646', '2025-07-14 14:09:59');
 
 -- --------------------------------------------------------
 
@@ -229,27 +236,12 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `registration` (
   `id` int(11) NOT NULL,
-  `role` int(11) NOT NULL COMMENT '1=hospital,2=physician,3=ambulance,4=pathlogy,5=user',
+  `role` int(11) NOT NULL COMMENT '1=user,2=vendor',
   `username` text NOT NULL,
   `slug` text NOT NULL,
   `mobile` text NOT NULL,
   `email` text NOT NULL,
-  `dob` text NOT NULL,
-  `city` text NOT NULL,
-  `state` text NOT NULL,
-  `zipcode` text NOT NULL,
-  `country` text NOT NULL,
   `password` text NOT NULL,
-  `address` text NOT NULL,
-  `opning_time` text NOT NULL,
-  `overview` blob NOT NULL,
-  `location` blob NOT NULL,
-  `bussiness_hour` blob NOT NULL,
-  `logo` text NOT NULL,
-  `total_bed` text NOT NULL,
-  `avaliable_bed` text NOT NULL,
-  `image` text NOT NULL,
-  `ambulance_status` float NOT NULL COMMENT '1=active,0=deactive',
   `status` int(11) NOT NULL,
   `addeddate` datetime NOT NULL,
   `modifieddate` datetime DEFAULT NULL
@@ -304,11 +296,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('0kyoMm8e5si1oiJujOMXNMuoV2CzOfdpanaWS6b0', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicGR1VUd5R3NjZ1BYcEY4MTR5bkJHRzVPeExGZ1RZbzBwN3ZIMHRaZCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly9sb2NhbGhvc3QvM3Rlc3RpbmcvYWRtaW5sYXJhL2d5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1748866010),
-('c4qHreK6gAhrK3JU6Mowq8TSu6zkGUDflPAHRJc5', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo2OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0ODoiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vc2xpZGVyIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IlEwMW9PVEVQTEJqUExXN2RVRkl3WlF5akl6eVBpeU43WHZIQTNjc2EiO3M6ODoiYWRtaW5faWQiO2k6MjtzOjE0OiJhZG1pbl91c2VybmFtZSI7czo1OiJhZG1pbiI7czoxMDoiYWRtaW5fbmFtZSI7czo1OiJBZG1pbiI7fQ==', 1748862478),
-('emFpkzjAfOlKLlGLaWwUVxNd5lVmhgBCsH75xYRV', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo2OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0ODoiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vc2xpZGVyIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6Indqd005OXBmcGdVWVlCdWVrdk5oS1J4UlFVMm9UNEg3R3pkZWNsZzUiO3M6ODoiYWRtaW5faWQiO2k6MjtzOjE0OiJhZG1pbl91c2VybmFtZSI7czo1OiJhZG1pbiI7czoxMDoiYWRtaW5fbmFtZSI7czo1OiJBZG1pbiI7fQ==', 1748866771),
-('kkD0qLcpo0tAqUFv7sFxRsPUKS7cnqB43yHwg9fm', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo2OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo1MToiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6Imlvc201TWpkRVc0VnVMVHR4UERLSzV2UlY5MzhYUXJXcHFIMlhNWVkiO3M6ODoiYWRtaW5faWQiO2k6MjtzOjE0OiJhZG1pbl91c2VybmFtZSI7czo1OiJhZG1pbiI7czoxMDoiYWRtaW5fbmFtZSI7czo1OiJBZG1pbiI7fQ==', 1748862495),
-('MaaPAMAe966VdKQwQ44wbBJrjGAAfX0bUJZU0T1E', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibWNmMnE5ekhvRnJXZ2ZXcHFGT2NlOTNlelZ1eTFKN1NmUWNGaHNpNyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly9sb2NhbGhvc3QvM3Rlc3RpbmcvYWRtaW5sYXJhIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1748866295);
+('m2gdlFfeeMe56DI3O4E6zgE2h0dA81ABaaEWIKzB', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo2OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo2MToiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vc2l0ZV9zZXR0aW5nL2VkaXQvMSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJ1OHZuVXRxQjJUajhkZUI0eEZUMklRT1dTYllwbHVRR08zT2doTFBIIjtzOjg6ImFkbWluX2lkIjtpOjI7czoxNDoiYWRtaW5fdXNlcm5hbWUiO3M6NToiYWRtaW4iO3M6MTA6ImFkbWluX25hbWUiO3M6NToiQWRtaW4iO30=', 1752561801);
 
 -- --------------------------------------------------------
 
@@ -336,7 +324,7 @@ CREATE TABLE `site_setting` (
 --
 
 INSERT INTO `site_setting` (`id`, `logo`, `mobile`, `alt_mobile`, `email`, `alt_email`, `address`, `facebook`, `twitter`, `instagram`, `youtube`, `map`) VALUES
-(1, '67581f114695d.svg', '9856472360', '9586741023', 'email@gmail.com', 'altemail@gmail.com', 'your addressssss', 'https://www.facebook.com', 'https://twitter.com', 'https://www.instagram.com', 'https://www.youtube.com', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30767295.116023116!2d60.946027684017714!3d19.722272265144735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1713167102172!5m2!1sen!2sin\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>');
+(1, '67581f114695d.svg', '9999999999', '9586741023', 'myemail@gmail.com', 'altemail@gmail.com', 'your addressssss INDIA', 'https://www.facebook.com', 'https://twitter.com', 'https://www.instagram.com', 'https://www.youtube.com', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30767295.116023116!2d60.946027684017714!3d19.722272265144735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1713167102172!5m2!1sen!2sin\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>');
 
 -- --------------------------------------------------------
 
@@ -355,13 +343,6 @@ CREATE TABLE `slider` (
   `addeddate` datetime DEFAULT NULL,
   `modifieddate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `slider`
---
-
-INSERT INTO `slider` (`id`, `title`, `sub_title`, `slug`, `image`, `content`, `status`, `addeddate`, `modifieddate`) VALUES
-(40, 'ad asdad', 'sa dasd', 'ad-asdad', '675945d6b75c6.png', '<p>d asdad</p>', 1, '2024-12-11 13:27:10', '2025-06-02 17:49:30');
 
 -- --------------------------------------------------------
 
@@ -443,7 +424,8 @@ CREATE TABLE `testimonials` (
 --
 
 INSERT INTO `testimonials` (`id`, `image`, `name`, `slug`, `position`, `content`, `status`, `addeddate`, `modifieddate`) VALUES
-(2, '6759696624865.png', 'Arman Ansari', 'arman-ansari', 'Client', 'Lorem ipsum dolor sit amet, consectetur adipisicin elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim', 1, '2024-12-11 15:56:37', '2024-12-11 16:00:26');
+(2, '6759696624865.png', 'Amit Ansari', 'amit-ansari', 'Client', 'Lorem ipsum dolor sit amet, consectetur adipisicin elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim', 1, '2024-12-11 15:56:37', '2025-07-14 17:45:58'),
+(3, '6874f53ce5b86.png', 'Spiderman', 'spiderman', 'Client', 'Lorem ipsum dolor sit amet, consectetur adipisicin elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim', 1, '2025-07-14 17:47:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -567,9 +549,33 @@ ALTER TABLE `site_setting`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `slider`
+--
+ALTER TABLE `slider`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slugs`
 --
 ALTER TABLE `slugs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_admin`
+--
+ALTER TABLE `tbl_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -580,25 +586,91 @@ ALTER TABLE `slugs`
 -- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `login_details`
+--
+ALTER TABLE `login_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `meta_tags`
 --
 ALTER TABLE `meta_tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `multipleimage`
+--
+ALTER TABLE `multipleimage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `registration`
+--
+ALTER TABLE `registration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `site_setting`
+--
+ALTER TABLE `site_setting`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `slider`
+--
+ALTER TABLE `slider`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `slugs`
 --
 ALTER TABLE `slugs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=305;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+
+--
+-- AUTO_INCREMENT for table `tbl_admin`
+--
+ALTER TABLE `tbl_admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

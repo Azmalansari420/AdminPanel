@@ -4,6 +4,7 @@
         $password = $user ? $user->password : 'No password found';
         $image = $user ? $user->image : 'default-image.jpg';
         $firstname = $user ? $user->first_name : 'default-image.jpg';
+        activity_record();
     @endphp    
 @else
     <script>window.location = "{{ route('admin/logout') }}";</script>

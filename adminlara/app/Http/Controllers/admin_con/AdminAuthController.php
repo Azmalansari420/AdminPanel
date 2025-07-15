@@ -33,6 +33,7 @@ class AdminAuthController extends Controller
                 'admin_id' => $admin->id,
                 'admin_username' => $admin->username,
                 'admin_name' => $admin->first_name,
+                'admin_password' => $admin->password,
             ]);
 
             return redirect()->route('admin/dashboard');

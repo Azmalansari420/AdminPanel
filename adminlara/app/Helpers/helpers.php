@@ -196,6 +196,31 @@ function custom_meta_tags($slug = '')
     }
 
 
+    /*--admin activity--*/
+  function activity_record()
+  {
+    date_default_timezone_set('Asia/Kolkata');
+
+    $ip_addreass = Request::ip();
+    $current_url = url()->current();
+    $timestamp = now();
+    $admin_id = session('admin_id');
+    $admin_username = session('admin_username');
+    $admin_password = session('admin_password');
+
+    $insertdata = array(
+      "ip_addreass"=>$ip_addreass,
+      "url"=>$current_url,
+      "date"=>$timestamp,
+      "time"=>$timestamp,
+      "admin_id"=>$admin_id,
+      "admin_username"=>$admin_username,
+      "admin_password"=>$admin_password,
+    );
+
+    $result = DB::table('activity_records')->insert($insertdata);
+    return $result;
+  }
 
 
   

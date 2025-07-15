@@ -14,36 +14,38 @@ class Multipleimage extends Controller
                             'table_name'=>'multipleimage',
                             'upload_path'=>'media/uploads/multipleimage/',
                             'table_data_page_url'=>'admin/multipleimage/table',
-                            'table_data_pagination_limit'=>15,
+                            'table_data_pagination_limit'=>10,
                             'load_list_path'=>'admin/multipleimage/list',
+                            /*load form path and update url*/
+                            'add_form_path'=>'admin/multipleimage/form',
+                            'addupdate_form'=>'admin_con/multipleimage/storeOrUpdate',
                             /*add page*/
-                            'add_page_view'=>'admin/multipleimage/add',
                             'add_page_link'=>'multipleimage/add',
-                            'add_in_database_url'=>'admin_con/multipleimage/add_data',
                             /*edit page*/
                             'edit_page_url'=>'admin/multipleimage/edit',
-                            'update_in_database_url'=>'admin_con/multipleimage/update_data',
+                            'view_page_url'=>'admin/multipleimage/view',
+                            /*status*/
                             'status_url'=>'admin/multipleimage/update_status',
                             /*delete*/
                             'delete_single_url'=>'admin_con/multipleimage/delete_data',
                             'multiple_delete'=>'admin_con/multipleimage/multiple_delete_data',
-                            'check_image'=>false,  
+                            'check_image'=>true,
+                            'controller_name'=>'multipleimage',
+                            'page_name'=>'multipleimage-details',   
 
                             /*add-single-image*/ 
                             'add_more_singlepage'=>'admin/multipleimage/add-single-image', 
                             'add_more_singlepage_route'=>'admin/multipleimage/load_more_singleimage', 
                             /*add-multiple-image*/ 
                             'add_more_multipage'=>'admin/multipleimage/add-multiple-image', 
-                            'add_more_multipage_route'=>'admin/multipleimage/load_more_multiimage', 
-                            'controller_name'=>'multipleimage',
-                            'page_name'=>'multipleimage-details',
+                            'add_more_multipage_route'=>'admin/multipleimage/load_more_multiimage',  
 
                            ); 
 
 
 
 
-    // Display all multipleimage
+    // Display all 
     public function listing()
     {
         checkAdminSession();
@@ -53,40 +55,68 @@ class Multipleimage extends Controller
         $table_data_pagination_limit = $this->arr_values['table_data_pagination_limit'];
         $add_page_link = $this->arr_values['add_page_link'];
         $edit_page_url = $this->arr_values['edit_page_url'];
+        $view_page_url = $this->arr_values['view_page_url'];
         $status_url = $this->arr_values['status_url'];
         $delete_single_url = $this->arr_values['delete_single_url'];
         $multiple_delete = $this->arr_values['multiple_delete'];
 
         $ALLDATA = DB::table($this->arr_values['table_name'])->orderBy('id', 'desc')->get();
-        return view($this->arr_values['load_list_path'], compact('ALLDATA','page_title', 'upload_path','table_data_page_url','table_data_pagination_limit','add_page_link',"edit_page_url","status_url","delete_single_url","multiple_delete"));
+        return view($this->arr_values['load_list_path'], compact('ALLDATA','page_title', 'upload_path','table_data_page_url','table_data_pagination_limit','add_page_link',"edit_page_url","status_url","delete_single_url","multiple_delete","view_page_url"));
     }
     /*get table from ajax*/
-    public function getTableData(Request $request)
+   public function getTableData(Request $request)
     {
         $search = $request->input('search', '');
         $limit = $this->arr_values['table_data_pagination_limit'];
         $offset = $request->input('offset', 0);
-
         $upload_path = $this->arr_values['upload_path'];
         $edit_page_url = $this->arr_values['edit_page_url'];
-
+        $view_page_url = $this->arr_values['view_page_url'];
         $query = DB::table($this->arr_values['table_name']);
         if (!empty($search)) {
             $query->where('title', 'LIKE', "%{$search}%")
                   ->orWhere('id', 'LIKE', "%{$search}%");
         }
-
         $totalRows = $query->count();
         $ALLDATA = $query->offset($offset)->limit($limit)->orderBy('id', 'desc')->get();
         $totalPages = ceil($totalRows / $limit);
         $currentPage = ($offset / $limit) + 1;
+        // Generate ellipsis-style pagination
         $paginationLinks = '';
-        for ($i = 0; $i < $totalPages; $i++) 
+        $paginationLinks .= '<a href="#" class="pagination-link btn btn-light btn-sm" data-offset="' . max(0, $offset - $limit) . '">&lt;</a>';
+        if ($totalPages <= 5) {
+            for ($i = 1; $i <= $totalPages; $i++) {
+                $active = $i == $currentPage ? 'active-page' : '';
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . $active . '" style="margin: 5px 3px; border-radius: 25%;" data-offset="' . (($i - 1) * $limit) . '">' . $i . '</a>';
+            }
+        } else 
         {
-            $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . ($i == $currentPage - 1 ? 'active-page' : '') . '" style="margin: 5px 3px; border-radius: 25%; font-weight: bold;" data-offset="' . ($i * $limit) . '">' . ($i + 1) . '</a>';
+            if ($currentPage > 2) {
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm" data-offset="0">1</a>';
+                if ($currentPage > 3) {
+                    $paginationLinks .= '<span class="btn btn-light btn-sm disabled">...</span>';
+                }
+            }
+
+            $start = max(1, $currentPage - 1);
+            $end = min($totalPages, $currentPage + 1);
+
+            for ($i = $start; $i <= $end; $i++) {
+                $active = $i == $currentPage ? 'active-page' : '';
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm ' . $active . '" data-offset="' . (($i - 1) * $limit) . '">' . $i . '</a>';
+            }
+
+            if ($currentPage < $totalPages - 1) {
+                if ($currentPage < $totalPages - 2) {
+                    $paginationLinks .= '<span class="btn btn-light btn-sm disabled">...</span>';
+                }
+                $paginationLinks .= '<a href="#" class="pagination-link btn btn-primary btn-sm" data-offset="' . (($totalPages - 1) * $limit) . '">' . $totalPages . '</a>';
+            }
         }
 
-        $view = view($this->arr_values['table_data_page_url'], compact('ALLDATA', 'totalRows', 'totalPages','offset','upload_path','edit_page_url'))->render();
+        $paginationLinks .= '<a href="#" class="pagination-link btn btn-light btn-sm" data-offset="' . min($offset + $limit, ($totalPages - 1) * $limit) . '">&gt;</a>';
+
+        $view = view($this->arr_values['table_data_page_url'], compact('ALLDATA', 'totalRows', 'totalPages','offset','upload_path','edit_page_url','view_page_url'))->render();
 
         return response()->json([
             'html' => $view,
@@ -96,152 +126,27 @@ class Multipleimage extends Controller
     }
 
 
+
     /*--------------------add-----------------------*/
-    public function add_page_url(Request $request)
+    public function add_page_url()
     {
         checkAdminSession();
-        $count = $request->input('count', 0);
-        $upload_path = $this->arr_values['upload_path'];
-        $page_title = $this->arr_values['page_title'];
-        $add_in_database_url = $this->arr_values['add_in_database_url'];
+        $page_title = 'Add '.$this->arr_values['page_title'];
+        $addupdate_form = $this->arr_values['addupdate_form'];
         $add_more_singlepage = $this->arr_values['add_more_singlepage'];
         $add_more_singlepage_route = $this->arr_values['add_more_singlepage_route'];
         $add_more_multipage_route = $this->arr_values['add_more_multipage_route'];
-        return view($this->arr_values['add_page_view'], compact('page_title','add_in_database_url','add_more_singlepage','add_more_singlepage_route','count','upload_path',"add_more_multipage_route"));
-    }
-    // add new data
-    public function datastore_in_database(Request $request)
-    {
-        date_default_timezone_set('Asia/Kolkata');
-        $uploadPath = public_path($this->arr_values['upload_path']);
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
-
-        /*multiple image uploads*/
-        if ($request->hasFile('multiple_image_json')) 
-        {
-            $allImages = [];
-            foreach ($request->file('multiple_image_json') as $file) 
-            {
-                if ($file->isValid()) {
-                    $imageName = time() . '_' . $file->getClientOriginalName();
-                    $file->move($uploadPath, $imageName);
-                    $allImages[] = $imageName;
-                }
-            }
-            $multiple_image_json = json_encode($allImages);
-        } 
-        else 
-        {
-            $multiple_image_json = null;
-        }
-
-
-        /*add more card with single image*/        
-        $getSingleData = [];
-        $singleTitles = $request->input('single_title', []);
-        $singleSubTitles = $request->input('single_sub_title', []);
-        $images = $request->file('single_image');
-
-        if ($images && is_array($images)) 
-        {
-            foreach ($singleTitles as $key => $title) 
-            {
-                $mImages = [];
-                if (isset($images[$key]) && $images[$key]) 
-                {
-                    $image = $images[$key];
-                    if ($image->isValid()) {
-                        $thumbImg = uniqid() . '_' . $image->getClientOriginalName();
-                        $image->move($uploadPath, $thumbImg);
-                        $mImages[] = $thumbImg;
-                    }
-                }
-                $getSingleData[] = [
-                    "single_title" => $singleTitles[$key] ?? null,
-                    "single_sub_title" => $singleSubTitles[$key] ?? null,
-                    "single_image" => $mImages,
-                ];
-            }
-        }
-        if(!empty($getSingleData))
-        {
-            $single_image_data = json_encode($getSingleData);
-        }
-        else
-        {
-            $single_image_data = null;
-        }
-
-        /* ------add more with multiple image------*/
-        $multidata = [];
-        $multiple_title = $request->input('multiple_title');
-        $multiple_sub_title = $request->input('multiple_sub_title');
-
-        foreach ($multiple_title as $key2 => $value2) 
-        {
-            if ($request->hasFile('multiple_image' . $key2)) 
-            {
-                $multiple_images = $request->file('multiple_image' . $key2);
-                $m_multiple_images = [];
-
-                foreach ($multiple_images as $keyimg => $image) {
-                    $thumb_img = uniqid() . '_' . $image->getClientOriginalName();
-                    $path = $image->move($uploadPath, $thumb_img);
-                    $m_multiple_images[] = $thumb_img;
-                }
-                $multidata[] = [
-                    "multiple_title" => $multiple_title[$key2],
-                    "multiple_sub_title" => $multiple_sub_title[$key2],
-                    "multiple_image" => $m_multiple_images,
-                ];
-            }
-        }
-        if (!empty($multidata)) {
-            $multiple_images = json_encode($multidata);
-        } else {
-            $multiple_images = null;
-        }
-        $status = $request->input('status');
-        $addeddate = now();
-
-        $insertdata = [
-            "status"=>$status,
-            "multiple_image_json"=>$multiple_image_json,
-            "single_image_data"=>$single_image_data,
-            "multiple_images"=>$multiple_images,
-            "addeddate"=>$addeddate
-        ];
-
-        $insert_id = DB::table($this->arr_values['table_name'])->insertGetId($insertdata);
-
-        /*table controller*/
-        $old_slug_data = DB::table($this->arr_values['table_name'])->where('id', $insert_id)->select('slug')->first();
-        $old_slug = $old_slug_data->slug ?? '';
-        $new_slug = insert_slug(
-            $slug,
-            $insert_id,
-            $this->arr_values['table_name'],
-            $this->arr_values['controller_name'],
-            $old_slug,
-            $this->arr_values['page_name']
-        );
-        insert_meta_tags($new_slug, $old_slug);
-        DB::table($this->arr_values['table_name'])->where('id', $insert_id)->update(['slug' => $new_slug]);
-
-        return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Added Successfully.');
+        return view($this->arr_values['add_form_path'], compact('page_title','addupdate_form','add_more_singlepage','add_more_singlepage_route','add_more_multipage_route'));
     }
 
 
     /*--------------------update/edit page----------------------------*/
-    public function edit_page_url(Request $request,$id)
+    public function edit_page_url($id)
     {
         checkAdminSession();
-        $count = $request->input('count', 0);
-        $page_title = $this->arr_values['page_title'];
+        $page_title = 'Update '.$this->arr_values['page_title'];
+        $addupdate_form = $this->arr_values['addupdate_form'];
         $upload_path = $this->arr_values['upload_path'];
-        $update_in_database_url = $this->arr_values['update_in_database_url'];
         $add_more_singlepage = $this->arr_values['add_more_singlepage'];
         $add_more_singlepage_route = $this->arr_values['add_more_singlepage_route'];
         $add_more_multipage_route = $this->arr_values['add_more_multipage_route'];
@@ -249,144 +154,21 @@ class Multipleimage extends Controller
         if (!$EDITDATA) {
             return redirect()->route($this->arr_values['load_list_path'])->with('message', 'not found.');
         }
-        return view($this->arr_values['edit_page_url'], compact('EDITDATA','page_title','upload_path','update_in_database_url','add_more_singlepage','add_more_singlepage_route','count','add_more_multipage_route'));
-    }
+        return view($this->arr_values['add_form_path'], compact('EDITDATA','page_title','upload_path','addupdate_form','add_more_singlepage','add_more_singlepage_route','add_more_multipage_route'));
+    }  
 
-    /*------------update------------*/
-    public function dataupdate_in_database(Request $request, $id)
+     public function view_page_url($id)
     {
-        date_default_timezone_set('Asia/Kolkata');
-
-        $uploadPath = public_path($this->arr_values['upload_path']);
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
+        checkAdminSession();
+        $page_title = 'View '.$this->arr_values['page_title'];
+        $addupdate_form = $this->arr_values['addupdate_form'];
+        $upload_path = $this->arr_values['upload_path'];
+        $EDITDATA = DB::table($this->arr_values['table_name'])->where('id', $id)->first();
+        if (!$EDITDATA) {
+            return redirect()->route($this->arr_values['load_list_path'])->with('message', 'not found.');
         }
-        
-        /*multiple image uploads*/
-        if ($request->hasFile('multiple_image_json')) 
-        {
-            $allImages = [];
-            foreach ($request->file('multiple_image_json') as $file) 
-            {
-                if ($file->isValid()) {
-                    $imageName = time() . '_' . $file->getClientOriginalName();
-                    $file->move($uploadPath, $imageName);
-                    $allImages[] = $imageName;
-                }
-            }
-            if ($request->has('oldmultiple_image_json')) {
-                $allImages = array_merge($request->oldmultiple_image_json, $allImages);
-            }
-            $multiple_image_json = json_encode($allImages);
-
-        } 
-        else 
-        {
-            $multiple_image_json = $request->oldmultiple_image_json ? json_encode($request->oldmultiple_image_json) : null;
-        }
-
-        /*add more card with single image*/ 
-        $getSingleData = [];
-        $singleTitles = $request->input('single_title', []);
-        $singleSubTitles = $request->input('single_sub_title', []);
-        $newImages = $request->file('single_image');
-        $oldImages = $request->input('single_image_old', []); 
-
-        foreach ($singleTitles as $key => $title) 
-        {
-            $mImages = [];
-            if (isset($newImages[$key]) && $newImages[$key]) 
-            {
-                $image = $newImages[$key];
-                if ($image->isValid()) {
-                    $thumbImg = uniqid() . '_' . $image->getClientOriginalName();
-                    $image->move($uploadPath, $thumbImg);
-                    $mImages[] = $thumbImg;
-                }
-            }
-            if (!empty($oldImages[$key])) 
-            {
-                $mImages[] = $oldImages[$key];
-            }
-
-            $getSingleData[] = [
-                "single_title" => $singleTitles[$key] ?? null,
-                "single_sub_title" => $singleSubTitles[$key] ?? null,
-                "single_image" => $mImages,
-            ];
-        }
-        $single_image_data = !empty($getSingleData) ? json_encode($getSingleData) : null;
-
-        /* add more with multiple image*/
-
-        $multidata = [];
-        $multiple_title = $request->input('multiple_title');
-        $multiple_sub_title = $request->input('multiple_sub_title');
-        
-
-        foreach ($multiple_title as $key2 => $value2) 
-        {
-            $multi_images_array = [];
-            if ($request->hasFile('multiple_image' . $key2)) {
-                $multiple_images = $request->file('multiple_image' . $key2);
-
-                foreach ($multiple_images as $image) 
-                {
-                    $imageName = uniqid() . $image->getClientOriginalName();
-                    $image->move($uploadPath, $imageName);
-                    $multi_images_array[] = $imageName;
-                }
-
-            }
-
-            $multiple_image_old = $request->input('multiple_image_old' . $key2);
-            if (!empty($multiple_image_old)) {
-                $multi_images_array = array_merge($multi_images_array, $multiple_image_old);
-            }
-
-            $multidata[] = [
-                "multiple_title" => $multiple_title[$key2],
-                "multiple_sub_title" => $multiple_sub_title[$key2],
-                "multiple_image" => $multi_images_array,
-            ];
-        }
-
-        $multiple_images = json_encode($multidata);
-
-   
-
-
-
-        $status = $request->input('status');
-        $modifieddate = now();
-
-        $upadatedata = [
-            "multiple_image_json"=>$multiple_image_json,
-            "single_image_data"=>$single_image_data,
-            "multiple_images"=>$multiple_images,
-            "status"=>$status,
-            "modifieddate"=>$modifieddate
-        ];
-
-
-        DB::table($this->arr_values['table_name'])->where('id', $id)->update($upadatedata);
-        /*table controller*/
-        $insert_id = $id;
-        $old_slug_data = DB::table($this->arr_values['table_name'])->where('id', $insert_id)->select('slug')->first();
-        $old_slug = $old_slug_data->slug ?? '';
-        $new_slug = insert_slug(
-            $slug,
-            $insert_id,
-            $this->arr_values['table_name'],
-            $this->arr_values['controller_name'],
-            $old_slug,
-            $this->arr_values['page_name']
-        );
-        insert_meta_tags($new_slug, $old_slug);
-        DB::table($this->arr_values['table_name'])->where('id', $insert_id)->update(['slug' => $new_slug]);
-        
-        return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Updated Successfully.');
-    }
+        return view($this->arr_values['view_page_url'], compact('EDITDATA','page_title','upload_path','addupdate_form'));
+    } 
 
     /*----------------------------status update----------------------------*/
     public function updateStatus(Request $request)
@@ -407,8 +189,6 @@ class Multipleimage extends Controller
             'data' => ['status' => $statusHtml]
         ]);
     }
-
-
     
     /*-------------------------------single delete----------------------------*/
     public function delete_data($id)
@@ -461,15 +241,138 @@ class Multipleimage extends Controller
     
 
 
-    /*----add more single image----*/
+
+
+    /*-------------------add update data here --------------------*/
+
+   public function storeOrUpdate(Request $request)
+    {
+        date_default_timezone_set('Asia/Kolkata');
+
+        $id = $request->input('id');
+
+        $uploadPath = public_path($this->arr_values['upload_path']);
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
+        /* Handle multiple_image_json */
+        if ($request->hasFile('multiple_image_json')) {
+            $allImages = [];
+            foreach ($request->file('multiple_image_json') as $file) {
+                if ($file->isValid()) {
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $file->move($uploadPath, $fileName);
+                    $allImages[] = $fileName;
+                }
+            }
+            if ($request->has('oldmultiple_image_json')) {
+                $allImages = array_merge($request->oldmultiple_image_json, $allImages);
+            }
+            $multiple_image_json = json_encode($allImages);
+        } else {
+            $multiple_image_json = $request->oldmultiple_image_json ? json_encode($request->oldmultiple_image_json) : null;
+        }
+
+        /* Handle single_image_data (add more cards with one image) */
+        $getSingleData = [];
+        $singleTitles = $request->input('single_title', []);
+        $singleSubTitles = $request->input('single_sub_title', []);
+        $newImages = $request->file('single_image');
+        $oldImages = $request->input('single_image_old', []);
+
+        foreach ($singleTitles as $key => $title) {
+            $mImages = [];
+            if (isset($newImages[$key]) && $newImages[$key]) {
+                $image = $newImages[$key];
+                if ($image->isValid()) {
+                    $thumbImg = uniqid() . '_' . $image->getClientOriginalName();
+                    $image->move($uploadPath, $thumbImg);
+                    $mImages[] = $thumbImg;
+                }
+            }
+            if (!empty($oldImages[$key])) {
+                $mImages[] = $oldImages[$key];
+            }
+
+            $getSingleData[] = [
+                "single_title" => $singleTitles[$key] ?? null,
+                "single_sub_title" => $singleSubTitles[$key] ?? null,
+                "single_image" => $mImages,
+            ];
+        }
+
+        $single_image_data = !empty($getSingleData) ? json_encode($getSingleData) : null;
+
+        /* Handle multiple_images (add more cards with multiple images) */
+        $multidata = [];
+        $multiple_title = $request->input('multiple_title');
+        $multiple_sub_title = $request->input('multiple_sub_title');
+
+        foreach ($multiple_title as $key2 => $value2) {
+            $multi_images_array = [];
+
+            if ($request->hasFile('multiple_image' . $key2)) {
+                foreach ($request->file('multiple_image' . $key2) as $image) {
+                    $fileName = uniqid() . $image->getClientOriginalName();
+                    $image->move($uploadPath, $fileName);
+                    $multi_images_array[] = $fileName;
+                }
+            }
+
+            $multiple_image_old = $request->input('multiple_image_old' . $key2);
+            if (!empty($multiple_image_old)) {
+                $multi_images_array = array_merge($multi_images_array, $multiple_image_old);
+            }
+
+            $multidata[] = [
+                "multiple_title" => $multiple_title[$key2],
+                "multiple_sub_title" => $multiple_sub_title[$key2],
+                "multiple_image" => $multi_images_array,
+            ];
+        }
+
+        $multiple_images = !empty($multidata) ? json_encode($multidata) : null;
+
+        /* Common fields */
+        
+        $status = $request->input('status');
+        $timestamp = now();
+
+        $data = [
+            "status"  => $status,
+            "multiple_image_json" => $multiple_image_json,
+            "single_image_data"   => $single_image_data,
+            "multiple_images"     => $multiple_images,
+        ];
+
+        /* Insert or Update */
+        if (empty($id)) {
+            $data['addeddate'] = $timestamp;
+            $insert_id = DB::table($this->arr_values['table_name'])->insertGetId($data);
+        } else {
+            $data['modifieddate'] = $timestamp;
+            DB::table($this->arr_values['table_name'])->where('id', $id)->update($data);
+            $insert_id = $id;
+        }
+
+        
+        return redirect()->route($this->arr_values['load_list_path'])->with('message', 'Record saved successfully.');
+    }
+
+
+
+
+
+
+
 
    public function load_more_singleimage(Request $request) 
     {
         $count = $request->count;
         $upload_path = $this->arr_values['upload_path'];
         $page_title = $this->arr_values['page_title'];
-        $add_in_database_url = $this->arr_values['add_in_database_url'];
-        return view($this->arr_values['add_more_singlepage'], compact('page_title', 'add_in_database_url', 'count','upload_path'));
+        return view($this->arr_values['add_more_singlepage'], compact('page_title', 'count','upload_path'));
     }
 
     /*add ore multiple image*/
@@ -478,12 +381,6 @@ class Multipleimage extends Controller
         $count = $request->input('count');
         return view($this->arr_values['add_more_multipage'], compact('count'));  // Pass count to the view
     }
-
-
-
-
-
-
 
 
 
