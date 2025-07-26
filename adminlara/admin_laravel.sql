@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2025 at 08:51 AM
+-- Generation Time: Jul 17, 2025 at 09:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `admin_laravel`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activity_records`
+--
+
+CREATE TABLE `activity_records` (
+  `id` int(11) NOT NULL,
+  `ip_addreass` text NOT NULL,
+  `url` text NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  `admin_username` varchar(50) NOT NULL,
+  `admin_password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `activity_records`
+--
+
+INSERT INTO `activity_records` (`id`, `ip_addreass`, `url`, `date`, `time`, `admin_id`, `admin_username`, `admin_password`) VALUES
+(1, '::1', 'http://localhost/moxxydmcadmin/admin/dashboard', '2025-07-17', '12:15:11', 2, 'admin', 'admin'),
+(2, '::1', 'http://localhost/moxxydmcadmin/admin/contact', '2025-07-17', '12:15:16', 2, 'admin', 'admin'),
+(3, '::1', 'http://localhost/1ADMINPANELS/adminlara/admin/dashboard', '2025-07-17', '12:31:23', 2, 'admin', 'admin'),
+(4, '::1', 'http://localhost/1ADMINPANELS/adminlara/admin/site_setting/edit/1', '2025-07-17', '12:31:31', 2, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -255,12 +282,12 @@ CREATE TABLE `registration` (
 
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `slug` text NOT NULL,
-  `role_access` longtext NOT NULL,
-  `status` int(11) NOT NULL,
-  `addeddate` datetime NOT NULL,
-  `modifieddate` datetime NOT NULL
+  `name` text DEFAULT NULL,
+  `slug` text DEFAULT NULL,
+  `role_access` longtext DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `addeddate` datetime DEFAULT NULL,
+  `modifieddate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -268,13 +295,7 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `name`, `slug`, `role_access`, `status`, `addeddate`, `modifieddate`) VALUES
-(1, 'HR TEAM', 'hr-team', '{\"main_access\":[\"0\",\"1\",\"2\",\"4\",\"5\"],\"inner_access\":[[\"3\"],[\"3\"],[\"3\"],[],[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"]]}', 1, '2024-07-30 13:20:06', '2024-07-31 13:01:40'),
-(2, 'NATIONAL SALE MANAGER', 'national-sale-manager', '{\"main_access\":[\"2\"],\"inner_access\":[[],[],[\"3\",\"4\"]]}', 1, '2024-07-30 13:20:42', '2024-07-30 16:17:25'),
-(3, 'MIS ADMIN', 'mis-admin', '{\"main_access\":[\"1\"],\"inner_access\":[[],[\"2\",\"3\"],[]]}', 1, '2024-07-30 13:20:54', '2024-07-30 16:17:21'),
-(4, 'ACCOUNTS TEAM', 'accounts-team', '{\"main_access\":[\"0\"],\"inner_access\":[[\"2\",\"4\"],[],[]]}', 1, '2024-07-30 13:21:07', '2024-07-30 16:17:16'),
-(5, 'PRODUCTION TEAM', 'production-team', '{\"main_access\":[\"0\",\"1\",\"2\"],\"inner_access\":[[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"]]}', 1, '2024-07-30 13:21:20', '2024-07-30 17:42:01'),
-(7, 'test', 'test', '{\"main_access\":[\"0\",\"1\",\"2\",\"7\"],\"inner_access\":[[\"1\",\"3\"],[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\"],[],[],[],[],[\"3\"]]}', 1, '2024-07-30 17:44:07', '2024-08-20 13:08:46'),
-(8, 'Azmal Ansari', 'azmal-ansari', '{\"main_access\":[\"0\",\"1\",\"2\",\"3\"],\"inner_access\":[[\"1\",\"2\",\"3\",\"4\"],[\"1\"],[\"4\"],[\"1\"],[],[]]}', 1, '2024-08-24 17:03:02', '2024-09-06 17:53:18');
+(9, 'Manager', 'manager', '{\"main_access\":[\"2\"],\"inner_access\":[[],[],[\"3\"],[\"1\",\"2\",\"3\",\"4\"],[\"2\"],[\"2\"],[]]}', 1, '2025-07-15 12:54:23', '2025-07-15 15:15:14');
 
 -- --------------------------------------------------------
 
@@ -296,7 +317,10 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('m2gdlFfeeMe56DI3O4E6zgE2h0dA81ABaaEWIKzB', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo2OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo2MToiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vc2l0ZV9zZXR0aW5nL2VkaXQvMSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJ1OHZuVXRxQjJUajhkZUI0eEZUMklRT1dTYllwbHVRR08zT2doTFBIIjtzOjg6ImFkbWluX2lkIjtpOjI7czoxNDoiYWRtaW5fdXNlcm5hbWUiO3M6NToiYWRtaW4iO3M6MTA6ImFkbWluX25hbWUiO3M6NToiQWRtaW4iO30=', 1752561801);
+('3ACEHkz9qc4yxyfvHqQuulv3ROKCumoEv5UUGcEM', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo5OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo1MToiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IjdvTUpQZVFqRFJJNFVWZHBtenN1amFwbTB0V29wa2YwM1RPczBZMGEiO3M6ODoiYWRtaW5faWQiO2k6NTtzOjE0OiJhZG1pbl91c2VybmFtZSI7czo4OiJzdXBlcm1hbiI7czoxMDoiYWRtaW5fbmFtZSI7TjtzOjE0OiJhZG1pbl9wYXNzd29yZCI7czo4OiJzdXBlcm1hbiI7czo0OiJ0eXBlIjtpOjI7czo0OiJyb2xlIjtpOjk7fQ==', 1752572083),
+('5qYSBCUFY6lDjOn5ItpuFMwGjrBM0pMsYBrHkjmH', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo5OntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo1MjoiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4vc2xpZGVyL2FkZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NjoiX3Rva2VuIjtzOjQwOiJKa3dzM045cG5RVTFKWTh6QTRiNnRUSEtVVGFmWlk3Rzg1QWpoTkMwIjtzOjg6ImFkbWluX2lkIjtpOjU7czoxNDoiYWRtaW5fdXNlcm5hbWUiO3M6ODoic3VwZXJtYW4iO3M6MTA6ImFkbWluX25hbWUiO047czoxNDoiYWRtaW5fcGFzc3dvcmQiO3M6ODoic3VwZXJtYW4iO3M6NDoidHlwZSI7aToyO3M6NDoicm9sZSI7aTo5O30=', 1752574551),
+('aiSEUlMEP2dvRIh2MbMEUSSjVZgzL1pg5AIQmZqs', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiWjdkOGdBUEJwbmxIbENZMGJaVzdyYmZhMWtvNjlBZk1VRnhaQ1VyOCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjU6Imh0dHA6Ly9sb2NhbGhvc3QvMUFETUlOUEFORUxTL2FkbWlubGFyYS9hZG1pbi9zaXRlX3NldHRpbmcvZWRpdC8xIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo4OiJhZG1pbl9pZCI7aToyO3M6MTQ6ImFkbWluX3VzZXJuYW1lIjtzOjU6ImFkbWluIjtzOjEwOiJhZG1pbl9uYW1lIjtzOjU6IkFkbWluIjtzOjE0OiJhZG1pbl9wYXNzd29yZCI7czo1OiJhZG1pbiI7fQ==', 1752735691),
+('m2gdlFfeeMe56DI3O4E6zgE2h0dA81ABaaEWIKzB', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36', 'YTozOntzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo0MToiaHR0cDovL2xvY2FsaG9zdC8zdGVzdGluZy9hZG1pbmxhcmEvYWRtaW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoibHRldzY1dmo4clVLTkdDdk0wbERyUmJVRlhUcFZwSEVXMlp1UlU5QSI7fQ==', 1752578867);
 
 -- --------------------------------------------------------
 
@@ -399,7 +423,8 @@ INSERT INTO `tbl_admin` (`id`, `type`, `role`, `access`, `first_name`, `last_nam
 (1, 1, 0, '', 'Azmal', 'Ansari', 'azmal123', 'azmal123', 'admin@gmail.com', '46546', 'sfsfsdf sdefdsfs fsdf sdf', 'user2.jpg', 'male', '01/01/2022', 'single', '22', 'india', 'elhi', NULL, NULL, 1, NULL, NULL),
 (2, 1, 0, '', 'Admin', NULL, 'admin', 'admin', 'admin123@gmail.com', '95822980123', 'India', '675442c5d265d.png', 'male', '01/01/2022', 'single', '22', 'india', 'delhi', '6ef5a86a72d307d9d2df14306a26534f64236ca1887fb9ba0cff55e6e0a26390', '2024-08-30 13:34:00', 1, NULL, NULL),
 (3, 1, 0, '', 'Wolverine', 'logen', 'azmal', 'azmal', 'wolverine@gmail.com', '897989', 'sfsfsdf sdefdsfs fsdf sdf', 'user3.jpg', 'male', '01/01/2022', 'single', '22', 'india', 'delhi', NULL, NULL, 1, NULL, NULL),
-(4, 2, 8, '{\"main_access\":[\"0\",\"1\",\"2\",\"3\"],\"inner_access\":[[\"1\",\"2\",\"3\",\"4\"],[\"1\"],[\"4\"],[\"1\"],[],[]]}', '', '', 'azmal12345', 'azmal12345', '', '', '', '', '', '', '', '', '', '', NULL, NULL, 1, '2024-08-24 17:23:45', '2024-11-13 15:44:20');
+(4, 2, 9, '{\"main_access\":[\"3\"],\"inner_access\":[[],[],[\"3\"],[\"1\",\"2\",\"3\",\"4\"],[\"2\"],[\"2\"],[]]}', '', '', 'azmal12345', 'azmal12345', '', '', '', '', '', '', '', '', '', '', NULL, NULL, 1, '2024-08-24 17:23:45', '2025-07-15 15:03:46'),
+(5, 2, 9, '{\"main_access\":[\"3\"],\"inner_access\":[[],[],[\"3\"],[\"1\",\"2\",\"3\",\"4\"],[\"2\"],[\"2\"],[]]}', NULL, NULL, 'superman', 'superman', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2025-07-15 13:13:14', '2025-07-15 15:03:43');
 
 -- --------------------------------------------------------
 
@@ -447,6 +472,12 @@ CREATE TABLE `users` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `activity_records`
+--
+ALTER TABLE `activity_records`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `blog`
@@ -583,6 +614,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `activity_records`
+--
+ALTER TABLE `activity_records`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `blog`
@@ -634,7 +671,7 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `site_setting`
@@ -658,7 +695,7 @@ ALTER TABLE `slugs`
 -- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `testimonials`
