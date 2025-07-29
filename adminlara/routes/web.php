@@ -3,9 +3,9 @@ require __DIR__.'/adminroute.php';
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 
 Route::get('/thankyou', function () {
     return view('thankyou');
