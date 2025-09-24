@@ -11,6 +11,7 @@
                <div class="card-header card-header-inverse">
                   <h4 class="card-header-title"><?=$page_title ?> </h4>
                   <div class="card-header-btn">
+                    <button id="downloadExcel" class="btn btn-success">Download Excel</button>
                      <button  class="btn btn-danger delete_multiple" >Delete Multiple</button>
                      <input type="search" name="" id="search">
                   </div>
@@ -131,7 +132,14 @@
                  })
                });
          
-             /*--single delete--*/
+                /*clcik to excel*/
+   $("#downloadExcel").click(function() 
+   {
+        var status = $("#status").val();
+        var search = $("#search").val();
+        window.location.href = "<?= base_url($excellink) ?>?status=" + status + "&search=" + search;
+    });
+
          
            
          

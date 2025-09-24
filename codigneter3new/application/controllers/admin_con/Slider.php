@@ -1,5 +1,5 @@
 <?php
-
+require_once FCPATH . 'vendor/autoload.php';
 class Slider extends CI_Controller
 {
 
@@ -23,6 +23,7 @@ class Slider extends CI_Controller
 						   	'page_name'=>'slider.php',
 						   	'pagination_limit'=>'15',
 						   	'formURL'=>'admin_con/slider/UpdateData',
+						   	'excellink'=>'admin_con/slider/download_excel',
 						   ); 
 
 
@@ -73,7 +74,7 @@ class Slider extends CI_Controller
 			}
 			else
 			{
-				$bimage = "";
+				$bimage = $this->input->post('oldimage');
 			}
 
 
@@ -129,6 +130,7 @@ class Slider extends CI_Controller
 	{		
 		check_controller_inner_access(3,1);
 		$data['page_title'] = $this->arr_values['page_title'];
+		$data['excellink'] = $this->arr_values['excellink'];
 		$data['add_url'] = base_url('admin_con/'.$this->arr_values['add_url'].'/add');
 		
 		$data['delete_url'] = base_url('admin_con/'.$this->arr_values['delete_url'].'/delete/');
@@ -218,6 +220,7 @@ class Slider extends CI_Controller
 	    $data['view_url'] = base_url('admin_con/' . $this->arr_values['view_url'] . '/view/');
 	    $data['edit_url'] = base_url('admin_con/' . $this->arr_values['edit_url'] . '/edit/');
 	    $data['delete_url'] = base_url('admin_con/' . $this->arr_values['delete_url'] . '/delete/');
+	    $data['excellink'] = $this->arr_values['excellink'];
 
 	    $definevariable = array(
 	        'ALLDATA' => $data['ALLDATA'],
@@ -225,6 +228,7 @@ class Slider extends CI_Controller
 	        'view_url' => $data['view_url'],
 	        'edit_url' => $data['edit_url'],
 	        'delete_url' => $data['delete_url'],
+	        'excellink' => $data['excellink'],
 	        'limit' => $limit,
 	        'total_rows' => $total_rows,
 	        'offset' => $offset,
@@ -336,6 +340,58 @@ class Slider extends CI_Controller
 		$status_html = status($status);
 		$data['data'] = array("status"=>$status_html,);
 		echo json_encode($data);
+	}
+
+
+	public function download_excel()
+	{
+
+	    $this->load->database();
+
+	    $status = $this->input->get('status');
+	    $search = $this->input->get('search');
+
+	    $this->db->from($this->arr_values['table_name']);
+	    if ($status !== null && $status !== '' && $status != '--Select Status --') {
+	        $this->db->where('status', (int)$status);
+	    }
+	    if (!empty($search)) {
+	        $this->db->group_start();
+	        $this->db->like('name', $search);
+	        $this->db->or_like('id', $search);
+	        $this->db->group_end();
+	    }
+	    $rows = $this->db->get()->result_array();
+
+	    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+	    $sheet = $spreadsheet->getActiveSheet();
+
+	    // Header
+	    $headers = ['ID','Name','Status','Added Date'];
+	    $col = 'A';
+	    foreach ($headers as $h) {
+	        $sheet->setCellValue($col.'1', $h);
+	        $col++;
+	    }
+
+	    // Data
+	    $rowNum = 2;
+	    foreach ($rows as $r) {
+	        $sheet->setCellValue('A'.$rowNum, $r['id']);
+	        $sheet->setCellValue('B'.$rowNum, $r['name']);
+	        $sheet->setCellValue('C'.$rowNum, $r['status']);
+	        $sheet->setCellValue('D'.$rowNum, $r['addeddate']);
+	        $rowNum++;
+	    }
+
+	    $filename = $this->arr_values['page_title'].date('Ymd_His').'.xlsx';
+	    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+	    header('Content-Disposition: attachment;filename="'.$filename.'"');
+	    header('Cache-Control: max-age=0');
+
+	    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+	    $writer->save('php://output');
+	    exit;
 	}
 
 

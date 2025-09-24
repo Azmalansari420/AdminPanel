@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2025 at 08:07 AM
+-- Generation Time: Sep 24, 2025 at 01:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,102 @@ CREATE TABLE `activity_records` (
   `admin_username` varchar(50) NOT NULL,
   `admin_password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `activity_records`
+--
+
+INSERT INTO `activity_records` (`id`, `ip_addreass`, `url`, `date`, `time`, `admin_id`, `admin_username`, `admin_password`) VALUES
+(1, '::1', 'http://localhost/uniqweb/admin/dashboard', '2025-08-30', '11:48:00', 2, 'admin@gmail.com', 'admin'),
+(2, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin/dashboard', '2025-09-24', '15:59:22', 2, 'admin@gmail.com', 'admin'),
+(3, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/site_setting/edit/1', '2025-09-24', '15:59:29', 2, 'admin@gmail.com', 'admin'),
+(4, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '15:59:31', 2, 'admin@gmail.com', 'admin'),
+(5, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/add', '2025-09-24', '15:59:32', 2, 'admin@gmail.com', 'admin'),
+(6, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '15:59:38', 2, 'admin@gmail.com', 'admin'),
+(7, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/edit/18', '2025-09-24', '15:59:39', 2, 'admin@gmail.com', 'admin'),
+(8, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '15:59:43', 2, 'admin@gmail.com', 'admin'),
+(9, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:00:26', 2, 'admin@gmail.com', 'admin'),
+(10, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/edit/18', '2025-09-24', '16:00:28', 2, 'admin@gmail.com', 'admin'),
+(11, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:00:29', 2, 'admin@gmail.com', 'admin'),
+(12, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/add', '2025-09-24', '16:00:31', 2, 'admin@gmail.com', 'admin'),
+(13, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:00:37', 2, 'admin@gmail.com', 'admin'),
+(14, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/edit/19', '2025-09-24', '16:00:38', 2, 'admin@gmail.com', 'admin'),
+(15, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:00:40', 2, 'admin@gmail.com', 'admin'),
+(16, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:05:35', 2, 'admin@gmail.com', 'admin'),
+(17, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:05:52', 2, 'admin@gmail.com', 'admin'),
+(18, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:06:11', 2, 'admin@gmail.com', 'admin'),
+(19, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:06:57', 2, 'admin@gmail.com', 'admin'),
+(20, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:08:05', 2, 'admin@gmail.com', 'admin'),
+(21, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:08:34', 2, 'admin@gmail.com', 'admin'),
+(22, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:08:52', 2, 'admin@gmail.com', 'admin'),
+(23, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:13:09', 2, 'admin@gmail.com', 'admin'),
+(24, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:13:44', 2, 'admin@gmail.com', 'admin'),
+(25, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:14:03', 2, 'admin@gmail.com', 'admin'),
+(26, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:14:33', 2, 'admin@gmail.com', 'admin'),
+(27, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:15:22', 2, 'admin@gmail.com', 'admin'),
+(28, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:17:01', 2, 'admin@gmail.com', 'admin'),
+(29, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:17:55', 2, 'admin@gmail.com', 'admin'),
+(30, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:19:52', 2, 'admin@gmail.com', 'admin'),
+(31, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:20:03', 2, 'admin@gmail.com', 'admin'),
+(32, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:20:50', 2, 'admin@gmail.com', 'admin'),
+(33, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:21:07', 2, 'admin@gmail.com', 'admin'),
+(34, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:22:55', 2, 'admin@gmail.com', 'admin'),
+(35, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:26:23', 2, 'admin@gmail.com', 'admin'),
+(36, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:27:40', 2, 'admin@gmail.com', 'admin'),
+(37, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:29:27', 2, 'admin@gmail.com', 'admin'),
+(38, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:29:51', 2, 'admin@gmail.com', 'admin'),
+(39, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:30:05', 2, 'admin@gmail.com', 'admin'),
+(40, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:30:09', 2, 'admin@gmail.com', 'admin'),
+(41, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:31:52', 2, 'admin@gmail.com', 'admin'),
+(42, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:32:14', 2, 'admin@gmail.com', 'admin'),
+(43, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:36:02', 2, 'admin@gmail.com', 'admin'),
+(44, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:36:34', 2, 'admin@gmail.com', 'admin'),
+(45, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:36:47', 2, 'admin@gmail.com', 'admin'),
+(46, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:36:55', 2, 'admin@gmail.com', 'admin'),
+(47, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/filter/listing', '2025-09-24', '16:39:06', 2, 'admin@gmail.com', 'admin'),
+(48, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:39:42', 2, 'admin@gmail.com', 'admin'),
+(49, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:40:00', 2, 'admin@gmail.com', 'admin'),
+(50, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:40:25', 2, 'admin@gmail.com', 'admin'),
+(51, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:42:55', 2, 'admin@gmail.com', 'admin'),
+(52, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:43:17', 2, 'admin@gmail.com', 'admin'),
+(53, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:43:33', 2, 'admin@gmail.com', 'admin'),
+(54, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:43:53', 2, 'admin@gmail.com', 'admin'),
+(55, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:44:32', 2, 'admin@gmail.com', 'admin'),
+(56, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:44:33', 2, 'admin@gmail.com', 'admin'),
+(57, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:45:08', 2, 'admin@gmail.com', 'admin'),
+(58, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/contact/listing', '2025-09-24', '16:45:47', 2, 'admin@gmail.com', 'admin'),
+(59, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/slider/listing', '2025-09-24', '16:45:50', 2, 'admin@gmail.com', 'admin'),
+(60, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/listing', '2025-09-24', '16:51:39', 2, 'admin@gmail.com', 'admin'),
+(61, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/listing', '2025-09-24', '16:51:53', 2, 'admin@gmail.com', 'admin'),
+(62, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/listing', '2025-09-24', '16:52:06', 2, 'admin@gmail.com', 'admin'),
+(63, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/add', '2025-09-24', '16:52:07', 2, 'admin@gmail.com', 'admin'),
+(64, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/listing', '2025-09-24', '16:52:20', 2, 'admin@gmail.com', 'admin'),
+(65, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/edit/1', '2025-09-24', '16:52:22', 2, 'admin@gmail.com', 'admin'),
+(66, '::1', 'http://localhost/1ADMINPANELS/codigneter3new/admin_con/blog/listing', '2025-09-24', '16:52:24', 2, 'admin@gmail.com', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blog`
+--
+
+CREATE TABLE `blog` (
+  `id` int(11) NOT NULL,
+  `image` text NOT NULL,
+  `name` text NOT NULL,
+  `slug` text NOT NULL,
+  `content` longblob NOT NULL,
+  `status` int(11) NOT NULL,
+  `addeddate` date NOT NULL,
+  `modifieddate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `blog`
+--
+
+INSERT INTO `blog` (`id`, `image`, `name`, `slug`, `content`, `status`, `addeddate`, `modifieddate`) VALUES
+(1, '1758712940.webp', 'tewt', 'tewt', 0x3c703e726561723c2f703e, 1, '2025-09-24', '2025-09-24 16:52:24');
 
 -- --------------------------------------------------------
 
@@ -684,7 +780,7 @@ CREATE TABLE `contact` (
 --
 
 INSERT INTO `contact` (`id`, `name`, `email`, `mobile`, `subject`, `message`, `addeddate`) VALUES
-(1, 'wol 1', 'wol1@gmail.com', '123456789', 'Test', 'teste ete st', '2024-08-24 14:18:28');
+(17, 'wol 2', 'wol1@gmail.com', '123456789', 'Test', 'teste ete st', '2024-08-24 14:18:28');
 
 -- --------------------------------------------------------
 
@@ -971,6 +1067,29 @@ INSERT INTO `country` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `phon
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `filter`
+--
+
+CREATE TABLE `filter` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `status` int(11) NOT NULL,
+  `addeddate` date NOT NULL,
+  `modifieddate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `filter`
+--
+
+INSERT INTO `filter` (`id`, `name`, `status`, `addeddate`, `modifieddate`) VALUES
+(1, 'azmal', 1, '2025-09-01', '0000-00-00'),
+(2, 'sharukh', 1, '2025-09-03', '0000-00-00'),
+(3, 'spiderman', 0, '2025-09-24', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `login_details`
 --
 
@@ -987,6 +1106,18 @@ CREATE TABLE `login_details` (
   `logout_time` time DEFAULT NULL,
   `login_status` int(11) NOT NULL COMMENT '0=login,1=logout,'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `login_details`
+--
+
+INSERT INTO `login_details` (`id`, `user_id`, `device_id`, `ip_address`, `login_date`, `login_time`, `username`, `password`, `logout_date`, `logout_time`, `login_status`) VALUES
+(16, '3', '680a1a0c64157::1', '::1', '2025-04-24', '16:31:32', 'azmal', 'azmal', '2025-04-24', '16:33:24', 1),
+(17, '2', '6853ac63d8d8a::1', '::1', '2025-06-19', '11:51:23', 'admin@gmail.com', 'admin', '2025-06-20', '10:48:39', 1),
+(18, '2', '685b8b409ec86::1', '::1', '2025-06-25', '11:08:08', 'admin@gmail.com', 'admin', '2025-06-25', '11:08:50', 1),
+(19, '2', '6863c5b3605da::1', '::1', '2025-07-01', '16:55:39', 'admin@gmail.com', 'admin', '2025-07-01', '17:00:52', 1),
+(20, '2', '68b29798144c4::1', '::1', '2025-08-30', '11:48:00', 'admin@gmail.com', 'admin', NULL, NULL, 0),
+(21, '2', '68d3c8020ea98::1', '::1', '2025-09-24', '15:59:22', 'admin@gmail.com', 'admin', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1015,7 +1146,9 @@ CREATE TABLE `meta_tags` (
 --
 
 INSERT INTO `meta_tags` (`id`, `page_name`, `meta_title`, `meta_auther`, `meta_keyword`, `meta_description`, `slug`, `add_date_time`, `update_date_time`, `update_history`, `is_delete`, `status`, `type`) VALUES
-(12, NULL, NULL, NULL, NULL, NULL, 'ada', NULL, NULL, NULL, NULL, NULL, 0);
+(24, NULL, NULL, NULL, NULL, NULL, 'sadd', NULL, NULL, NULL, NULL, NULL, 0),
+(26, NULL, NULL, NULL, NULL, NULL, 'sad', NULL, NULL, NULL, NULL, NULL, 0),
+(28, NULL, NULL, NULL, NULL, NULL, 'tewt', NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1033,6 +1166,14 @@ CREATE TABLE `multipleimage` (
   `addeddate` text NOT NULL,
   `modifieddate` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `multipleimage`
+--
+
+INSERT INTO `multipleimage` (`id`, `title`, `multiple_image_json`, `single_image`, `multiple_images`, `status`, `addeddate`, `modifieddate`) VALUES
+(36, '', '[\"1750319898_TaOFp.jpg\"]', '', '', 1, '', '2025-06-19 13:28:18'),
+(37, '', '[\"1750319907_qIdTm.png\"]', '[{\"single_title\":\"asdsad\",\"single_sub_title\":\"asdsad\",\"single_image\":\"6853de4b933960logo2.png\"},{\"single_title\":\"2w3qe\",\"single_sub_title\":\"wqedwqe\",\"single_image\":\"6853db3bd02421yryjX.png\"}]', '[{\"multiple_title\":\"dd\",\"multiple_sub_title\":\"aas\",\"multiple_image\":[\"1796022470TaOFp.jpg\",\"314443939udVtd.png\",\"1659890241wati.png\"]},{\"multiple_title\":\"23424\",\"multiple_sub_title\":\"234234\",\"multiple_image\":[\"936920487CyuN7.png\",\"1612994684ran.png\",\"1709470510Qqc9M.png\"]}]', 1, '', '2025-06-19 15:24:19');
 
 -- --------------------------------------------------------
 
@@ -1074,9 +1215,8 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `name`, `slug`, `role_access`, `status`, `addeddate`, `modifieddate`) VALUES
-(4, 'ACCOUNTS TEAM', 'accounts-team', '{\"main_access\":[\"0\"],\"inner_access\":[[\"2\",\"4\"],[],[]]}', 1, '2024-07-30 13:21:07', '2024-07-30 16:17:16'),
-(5, 'PRODUCTION TEAM', 'production-team', '{\"main_access\":[\"0\",\"1\",\"2\"],\"inner_access\":[[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"]]}', 1, '2024-07-30 13:21:20', '2024-07-30 17:42:01'),
-(7, 'test', 'test', '{\"main_access\":[\"0\",\"1\",\"2\",\"7\"],\"inner_access\":[[\"1\",\"3\"],[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\"],[],[],[],[],[\"3\"]]}', 1, '2024-07-30 17:44:07', '2024-08-20 13:08:46');
+(4, 'ACCOUNTS TEAM', 'accounts-team', '{\"main_access\":[\"0\"],\"inner_access\":[[\"2\",\"4\"],[],[],[],[],[]]}', 1, '2024-07-30 13:21:07', '2025-06-19 13:11:03'),
+(5, 'PRODUCTION TEAM', 'production-team', '{\"main_access\":[\"0\",\"1\",\"2\"],\"inner_access\":[[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"],[\"1\",\"2\",\"3\",\"4\"],[],[],[]]}', 1, '2024-07-30 13:21:20', '2025-06-19 13:11:00');
 
 -- --------------------------------------------------------
 
@@ -1104,7 +1244,7 @@ CREATE TABLE `site_setting` (
 --
 
 INSERT INTO `site_setting` (`id`, `logo`, `mobile`, `alt_mobile`, `email`, `alt_email`, `address`, `facebook`, `twitter`, `instagram`, `youtube`, `map`) VALUES
-(1, '1740028094.png', '9856472360', '9586741023', 'email2@gmail.com', 'altemail2@gmail.com', 'your address', 'https://www.facebook.com/', 'https://twitter.com/', 'https://www.instagram.com/', 'https://www.youtube.com/', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30767295.116023116!2d60.946027684017714!3d19.722272265144735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1713167102172!5m2!1sen!2sin\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>');
+(1, '1750829909.png', '9856472360', '9586741023', 'email2@gmail.com', 'altemail2@gmail.com', 'your address', 'https://www.facebook.com/', 'https://twitter.com/', 'https://www.instagram.com/', 'https://www.youtube.com/', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30767295.116023116!2d60.946027684017714!3d19.722272265144735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1713167102172!5m2!1sen!2sin\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>');
 
 -- --------------------------------------------------------
 
@@ -1129,7 +1269,8 @@ CREATE TABLE `slider` (
 --
 
 INSERT INTO `slider` (`id`, `title`, `sub_title`, `slug`, `image`, `content`, `status`, `addeddate`, `modifieddate`) VALUES
-(4, 'dfr', 'wer', 'dfr', '1731483183.jpg', '<p>ewr</p>', 1, '2024-11-13 13:03:03', '0000-00-00 00:00:00');
+(18, 'sadd', 'asdsaas sd s', 'sadd', '1758709778.webp', '<p>asdsad</p>', 1, '2025-09-24 15:59:38', '2025-09-24 16:00:29'),
+(19, 'sad', 'asd', 'sad', '1758709837.webp', '<p>asda</p>', 1, '2025-09-24 16:00:37', '2025-09-24 16:00:39');
 
 -- --------------------------------------------------------
 
@@ -1145,6 +1286,17 @@ CREATE TABLE `slugs` (
   `controller_name` varchar(150) NOT NULL,
   `p_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `slugs`
+--
+
+INSERT INTO `slugs` (`id`, `slug`, `table_name`, `page_name`, `controller_name`, `p_id`) VALUES
+(299, 'step-addupdate', 'slider', 'slider.php', 'slider', 16),
+(302, 'r323', 'slider', 'slider.php', 'slider', 17),
+(305, 'sadd', 'slider', 'slider.php', 'slider', 18),
+(307, 'sad', 'slider', 'slider.php', 'slider', 19),
+(309, 'tewt', 'blog', 'blog.php', 'blog', 1);
 
 -- --------------------------------------------------------
 
@@ -1243,7 +1395,7 @@ INSERT INTO `tbl_admin` (`id`, `type`, `role`, `access`, `first_name`, `last_nam
 (1, 1, 0, '', 'Azmal', 'Ansari', 'azmal123', 'azmal123', 'admin@gmail.com', '46546', 'sfsfsdf sdefdsfs fsdf sdf', 'user2.jpg', 'male', '01/01/2022', 'single', '22', 'india', 'elhi', NULL, NULL, 1, NULL, NULL),
 (2, 1, 0, '', 'Admin', 'Admin', 'admin@gmail.com', 'admin', 'admin123@gmail.com', '9582285215', 'delhi', '1724412456.png', 'male', '01/01/2022', 'single', '22', 'india', 'delhi', '6ef5a86a72d307d9d2df14306a26534f64236ca1887fb9ba0cff55e6e0a26390', '2024-08-30 13:34:00', 1, NULL, NULL),
 (3, 1, 0, '', 'Wolverine', 'logen', 'azmal', 'azmal', 'wolverine@gmail.com', '897989', 'sfsfsdf sdefdsfs fsdf sdf', 'user3.jpg', 'male', '01/01/2022', 'single', '22', 'india', 'delhi', NULL, NULL, 1, NULL, NULL),
-(4, 2, 8, '{\"main_access\":[\"0\",\"1\",\"2\",\"3\"],\"inner_access\":[[\"1\",\"2\",\"3\",\"4\"],[\"1\"],[\"4\"],[\"1\"],[],[]]}', '', '', 'azmal12345', 'azmal12345', '', '', '', '', '', '', '', '', '', '', NULL, NULL, 1, '2024-08-24 17:23:45', '2024-11-13 15:44:20');
+(4, 2, 4, '{\"main_access\":[\"0\"],\"inner_access\":[[\"2\",\"4\"],[],[],[],[],[]]}', '', '', 'azmal123', 'azmal123', '', '', '', '', '', '', '', '', '', '', NULL, NULL, 1, '2024-08-24 17:23:45', '2025-06-19 13:16:10');
 
 -- --------------------------------------------------------
 
@@ -1267,7 +1419,9 @@ CREATE TABLE `testimonials` (
 --
 
 INSERT INTO `testimonials` (`id`, `image`, `name`, `position`, `content`, `status`, `addeddate`, `modifieddate`) VALUES
-(1, '1731493179.png', 'Spiderman', 'Client', '<p>Hello </p>', 1, '2024-08-24 18:07:24', '2024-11-13 15:49:39');
+(1, '1731493179.png', 'Spiderman', 'Client', '<p>Hello </p>', 1, '2024-08-24 18:07:24', '2024-11-13 15:49:39'),
+(2, '1750317758.png', 'azmal', 'Client', '<p>ddd</p>', 1, '2025-06-19 12:52:38', '0000-00-00 00:00:00'),
+(3, '1750317992.png', 'azmal df', 'Client df', '<p>ddd sd</p>', 1, '2025-06-19 12:52:52', '2025-06-19 12:56:32');
 
 --
 -- Indexes for dumped tables
@@ -1277,6 +1431,12 @@ INSERT INTO `testimonials` (`id`, `image`, `name`, `position`, `content`, `statu
 -- Indexes for table `activity_records`
 --
 ALTER TABLE `activity_records`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `blog`
+--
+ALTER TABLE `blog`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1301,6 +1461,12 @@ ALTER TABLE `content`
 -- Indexes for table `country`
 --
 ALTER TABLE `country`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `filter`
+--
+ALTER TABLE `filter`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1377,7 +1543,13 @@ ALTER TABLE `testimonials`
 -- AUTO_INCREMENT for table `activity_records`
 --
 ALTER TABLE `activity_records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT for table `blog`
+--
+ALTER TABLE `blog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `city`
@@ -1389,7 +1561,7 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `content`
@@ -1404,22 +1576,28 @@ ALTER TABLE `country`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
 
 --
+-- AUTO_INCREMENT for table `filter`
+--
+ALTER TABLE `filter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `login_details`
 --
 ALTER TABLE `login_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `meta_tags`
 --
 ALTER TABLE `meta_tags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `multipleimage`
 --
 ALTER TABLE `multipleimage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `registration`
@@ -1431,7 +1609,7 @@ ALTER TABLE `registration`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `site_setting`
@@ -1443,13 +1621,13 @@ ALTER TABLE `site_setting`
 -- AUTO_INCREMENT for table `slider`
 --
 ALTER TABLE `slider`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `slugs`
 --
 ALTER TABLE `slugs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 
 --
 -- AUTO_INCREMENT for table `state`
@@ -1467,7 +1645,7 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `testimonials`
 --
 ALTER TABLE `testimonials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
