@@ -45,7 +45,7 @@ class WebController extends Controller
     public function loadPage($slug = '')
     {
         if (empty($slug)) {
-            $slug = 'index.php';
+            $slug = 'index';
         }
 
         // Find slug in DB
