@@ -8,6 +8,9 @@ use App\Http\Controllers\admin_con\Contact;
 use App\Http\Controllers\admin_con\Testimonials;
 use App\Http\Controllers\admin_con\Multipleimage;
 use App\Http\Controllers\admin_con\Blog;
+use App\Http\Controllers\admin_con\Country;
+use App\Http\Controllers\admin_con\State;
+use App\Http\Controllers\admin_con\City;
 use Illuminate\Support\Facades\Route;
 
 // Admin Authentication Routes
@@ -130,3 +133,73 @@ Route::prefix('admin/blog')->group(function () {
     Route::delete('/multiple_delete_data', [Blog::class, 'multiple_delete_data'])->name('admin_con/blog/multiple_delete_data');
 });
 
+
+/*------------------------country----------------------*/
+Route::prefix('admin/country')->group(function () {
+    Route::get('/', [Country::class, 'listing'])->name('admin/country/list');
+    Route::post('/table', [Country::class, 'getTableData'])->name('admin/country/table');
+    /*------add------*/
+    Route::get('/add', [Country::class, 'add_page_url'])->name('admin/country/add');
+    /*------upadte------*/
+    Route::get('/edit/{id}', [Country::class, 'edit_page_url'])->name('admin/country/edit');
+    /*----view----*/
+    Route::get('/view/{id}', [Country::class, 'view_page_url'])->name('admin/country/view');
+    /*--single update -delete--*/
+    Route::post('/store', [Country::class, 'storeOrUpdate'])->name('admin_con/country/storeOrUpdate');
+    /*------status------*/
+    Route::post('/update_status', [Country::class, 'updateStatus'])->name('admin/country/update_status');
+    /*------delete------*/
+    Route::delete('/delete_data/{id}', [Country::class, 'delete_data'])->name('admin_con/country/delete_data');
+    Route::delete('/multiple_delete_data', [Country::class, 'multiple_delete_data'])->name('admin_con/country/multiple_delete_data');
+});
+
+
+/*------------------------state----------------------*/
+Route::prefix('admin/state')->group(function () {
+    Route::get('/', [State::class, 'listing'])->name('admin/state/list');
+    Route::post('/table', [State::class, 'getTableData'])->name('admin/state/table');
+    /*------add------*/
+    Route::get('/add', [State::class, 'add_page_url'])->name('admin/state/add');
+    /*------upadte------*/
+    Route::get('/edit/{id}', [State::class, 'edit_page_url'])->name('admin/state/edit');
+    /*----view----*/
+    Route::get('/view/{id}', [State::class, 'view_page_url'])->name('admin/state/view');
+    /*--single update -delete--*/
+    Route::post('/store', [State::class, 'storeOrUpdate'])->name('admin_con/state/storeOrUpdate');
+    /*------status------*/
+    Route::post('/update_status', [State::class, 'updateStatus'])->name('admin/state/update_status');
+    /*------delete------*/
+    Route::delete('/delete_data/{id}', [State::class, 'delete_data'])->name('admin_con/state/delete_data');
+    Route::delete('/multiple_delete_data', [State::class, 'multiple_delete_data'])->name('admin_con/state/multiple_delete_data');
+});
+
+
+/*------------------------city----------------------*/
+Route::prefix('admin/city')->group(function () {
+    Route::get('/', [City::class, 'listing'])->name('admin/city/list');
+    Route::get('/', [City::class, 'listing'])->name('admin/city/list');
+    Route::post('/table', [City::class, 'getTableData'])->name('admin/city/table');
+    Route::post('/table', [City::class, 'getTableData'])->name('admin/city/table');
+    /*------add------*/
+    Route::get('/add', [City::class, 'add_page_url'])->name('admin/city/add');
+    Route::get('/add', [City::class, 'add_page_url'])->name('admin/city/add');
+    /*------upadte------*/
+    Route::get('/edit/{id}', [City::class, 'edit_page_url'])->name('admin/city/edit');
+    Route::get('/edit/{id}', [City::class, 'edit_page_url'])->name('admin/city/edit');
+    /*----view----*/
+    Route::get('/view/{id}', [City::class, 'view_page_url'])->name('admin/city/view');
+    Route::get('/view/{id}', [City::class, 'view_page_url'])->name('admin/city/view');
+    /*--single update -delete--*/
+    Route::post('/store', [City::class, 'storeOrUpdate'])->name('admin_con/city/storeOrUpdate');
+    Route::post('/store', [City::class, 'storeOrUpdate'])->name('admin_con/city/storeOrUpdate');
+    /*------status------*/
+    Route::post('/update_status', [City::class, 'updateStatus'])->name('admin/city/update_status');
+    Route::post('/update_status', [City::class, 'updateStatus'])->name('admin/city/update_status');
+    /*------delete------*/
+    Route::delete('/delete_data/{id}', [City::class, 'delete_data'])->name('admin_con/city/delete_data');
+    Route::delete('/delete_data/{id}', [City::class, 'delete_data'])->name('admin_con/city/delete_data');
+    Route::delete('/multiple_delete_data', [City::class, 'multiple_delete_data'])->name('admin_con/city/multiple_delete_data');
+    Route::delete('/multiple_delete_data', [City::class, 'multiple_delete_data'])->name('admin_con/city/multiple_delete_data');
+
+    Route::post('/getstatename', [City::class, 'getstatename'])->name('admin_con/city/getstatename');
+});

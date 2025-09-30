@@ -64,7 +64,7 @@ $siteSetting = DB::table('site_setting')->where('id', 1)->first();
        
          <li class="nav-divider"></li>
          <li class="">
-            <a href="">
+            <a href="{{route('admin/logout')}}">
                <span class="nav-icon"><i class="fa fa-cog bg-gradient-purple text-white"></i></span>
                <span class="nav-text">Logout </span>
             </a>

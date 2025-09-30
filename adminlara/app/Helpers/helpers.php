@@ -61,6 +61,17 @@ use Illuminate\Support\Facades\Session;
     }
 
 
+function countryname($id)
+{
+    return DB::table('country')->where('id', $id)->value('name') ?? '';
+}
+
+
+function statename($id)
+{
+    return DB::table('state')->where('id', $id)->value('name') ?? '';
+}
+
 
 
 
