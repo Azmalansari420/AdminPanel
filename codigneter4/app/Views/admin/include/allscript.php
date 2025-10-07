@@ -13,6 +13,12 @@
 <script src="<?=base_url('public/')?>/admin/js/sweetalert2@11.js" ></script>
 
 
+<script src="//cdn.ckeditor.com/4.19.0/full/ckeditor.js"></script>
+<style>
+  .cke_notifications_area {
+      display: none !important;
+  }
+</style>
 
  <?php if (session()->getFlashdata('message')) : ?>
   <script>
