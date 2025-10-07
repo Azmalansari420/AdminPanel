@@ -74,7 +74,6 @@
                         <div class="col-12 form-group mt-4">
                            <button type="submit" name="submit" class="btn btn-purple">Submit</button>
                         </div>
-                        </form>
                      </div>
                   </div>
                </div>

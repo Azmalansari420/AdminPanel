@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-12 form-group">
                            <label>Review </label>
-                           <textarea name="content" class="summernote form-control"><?=@$EDITDATA->content ?></textarea>
+                           <textarea name="content" class="form-control"><?=@$EDITDATA->content ?></textarea>
                         </div>
                      </div>
                   </div>

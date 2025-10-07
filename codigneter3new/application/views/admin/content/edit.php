@@ -16,7 +16,7 @@
 
                         <div class="col-12 form-group">
                            <label>Content </label>
-                           <textarea name="content" rows="4" class="summernote form-control"><?php echo $EDITDATA[0]->content; ?></textarea>
+                           <textarea name="content" id="editor" rows="4" class="form-control"><?php echo $EDITDATA[0]->content; ?></textarea>
                         </div>
 
                         <div class="col-12 form-group mt-4">
@@ -40,5 +40,9 @@
 
       <?php $this->load->view('admin/include/theams') ?>
       <?php $this->load->view('admin/include/allscript') ?>
+
+      <script>
+  CKEDITOR.replace( 'editor' );
+</script>
    </body>
 </html>

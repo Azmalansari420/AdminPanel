@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-12 form-group">
                            <label>Content </label>
-                           <textarea name="content" class="summernote form-control"><?=@$EDITDATA->content ?></textarea>
+                           <textarea name="content" id="editor" class="form-control"><?=@$EDITDATA->content ?></textarea>
                         </div>
                      </div>
                   </div>
@@ -48,10 +48,6 @@
                            <input type="hidden" class="form-control" name="oldimage" value="<?= @$EDITDATA->image; ?>">
                         </div>
 
-                           
-
-
-                        </div>
                         <div class="col-12 form-group ">
                            <label>Select Status</label>
                            <select class="selectpicker  form-control" required name="status" data-style="btn-default" data-live-search="true" >
@@ -71,5 +67,9 @@
       </div>
       <?php $this->load->view('admin/include/theams') ?>
       <?php $this->load->view('admin/include/allscript') ?>
+
+<script>
+  CKEDITOR.replace( 'editor' );
+</script>
    </body>
 </html>

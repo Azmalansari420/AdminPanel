@@ -11,7 +11,12 @@
 <script src="<?=base_url() ?>media/admin/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
 <script src="<?=base_url() ?>media/admin/plugins/bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 <script src="<?php echo base_url(); ?>media/admin/js/sweetalert2@11.js" ></script>
-
+<script src="//cdn.ckeditor.com/4.19.0/full/ckeditor.js"></script>
+<style>
+  .cke_notifications_area {
+      display: none !important;
+  }
+</style>
 
   <?php if(!empty($this->session->flashdata('message'))){ ?>
   <script>
