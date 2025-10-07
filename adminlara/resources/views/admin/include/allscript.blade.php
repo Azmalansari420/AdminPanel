@@ -12,7 +12,12 @@
 <script src="{{url('')}}/public/admin_assests/plugins/bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 <script src="{{url('')}}/public/admin_assests/js/sweetalert2@11.js" ></script>
 
-
+<script src="//cdn.ckeditor.com/4.19.0/full/ckeditor.js"></script>
+<style>
+  .cke_notifications_area {
+      display: none !important;
+  }
+</style>
  
 
 
